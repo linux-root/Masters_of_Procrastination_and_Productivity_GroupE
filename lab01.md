@@ -1,3 +1,5 @@
+## 1. `WITHDRAW_MONEY` Use Case Description: Main Flow
+
 | Attribute Name | Type   | Description                  |
 |----------------|--------|------------------------------|
 | `name`         | String | Name of the project manager. |
