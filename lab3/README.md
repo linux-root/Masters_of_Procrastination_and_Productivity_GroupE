@@ -8,7 +8,7 @@
 - `p1.equals(p2)` is false because in the implementation of  PersonWithJob (class of p1), it has this line `if(!(aPerson instanceof PersonWithJob)) return false;` while aPerson (p2) has type Person which is NOT PersonWithJob
 - `p2.equals(p1)` is true because p2 is instance of Person, and the name fields of two objects are equal
 - 
-## 2.
+## 2. [Source codes](./prob2)
 ## 3.Circle and Cylinder
 [Source codes](./prob3)
 Explanation of Design
