@@ -10,4 +10,9 @@
 - 
 ## 2.
 ## 3.
+[Source codes](./prob3)
+Explanation of Design
+The Cylinder class inherits from Circle because a cylinder extends the circle by adding the concept of height and volume.Another reason is the computeArea method in the Circle class can be reused in the Cylinder class to calculate the base area, avoiding duplication of logic.
+Attributes: The radius attribute is placed in the Circle class, which is shared with the Cylinder class through inheritance, while height is specific to the Cylinder.
+This design aligns better with the principle of inheritance and promotes clear and logical class hierarchies.
 ## 4.
