@@ -9,8 +9,7 @@
 - `p2.equals(p1)` is true because p2 is instance of Person, and the name fields of two objects are equal
 - 
 ## 2. [Source codes](./prob2)
-## 3.Circle and Cylinder
-[Source codes](./prob3)
+## 3. [Source codes](./prob3)
 Explanation of Design
 The Cylinder class inherits from Circle because a cylinder extends the circle by adding the concept of height and volume.Another reason is the computeArea method in the Circle class can be reused in the Cylinder class to calculate the base area, avoiding duplication of logic.
 Attributes: The radius attribute is placed in the Circle class, which is shared with the Cylinder class through inheritance, while height is specific to the Cylinder.
