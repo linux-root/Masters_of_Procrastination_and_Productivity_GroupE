@@ -16,4 +16,5 @@ Attributes: The radius attribute is placed in the Circle class, which is shared 
 This design aligns better with the principle of inheritance and promotes clear and logical class hierarchies.
 ## 4. Properties management system
 [Source codes](./prob4)
+</br>
 ![diagram](./prob4/lab3prob4.png)
