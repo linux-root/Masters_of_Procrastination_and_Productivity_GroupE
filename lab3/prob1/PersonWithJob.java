@@ -24,11 +24,10 @@ public class PersonWithJob {
 		if(aPerson == null) return false; 
 		if(aPerson instanceof PersonWithJob){
 			PersonWithJob p = (PersonWithJob)aPerson;
-			return p.getPerson().equals(this.person);
-		} else if ()
-		boolean isEqual = this.getName().equals(p.getName()) &&
-				this.getSalary()==p.getSalary();
-		return isEqual;
+			return p.getPerson().equals(this.person) && this.getSalary()==p.getSalary();
+		} else {
+			return false;
+		}
 	}
 	public static void main(String[] args) {
 		Person p1 = new PersonWithJob("Joe", 30000);
