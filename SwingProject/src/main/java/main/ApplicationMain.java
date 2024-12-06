@@ -1,17 +1,20 @@
-package librarysystem;
+package main;
+
+import com.formdev.flatlaf.FlatLightLaf;
+import librarysystem.LibrarySystem;
 
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 
+public class ApplicationMain {
 
-public class Main {
-
-	public static void main(String[] args) {
-	      EventQueue.invokeLater(() -> 
+	public static void main(String[] args) throws UnsupportedLookAndFeelException {
+       	UIManager.setLookAndFeel(new FlatLightLaf());
+        EventQueue.invokeLater(() ->
 	         {
 	            LibrarySystem.INSTANCE.setTitle("Sample Library Application");
 	            LibrarySystem.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,4 +33,5 @@ public class Main {
 			int frameWidth = f.getSize().width;
 			f.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 3);
 		}
+
 }

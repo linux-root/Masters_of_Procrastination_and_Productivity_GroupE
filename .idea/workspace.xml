@@ -4,36 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e4edfad-57ea-44fb-ba67-42d5e2433640" name="Changes" comment="update">
-      <change afterPath="$PROJECT_DIR$/SwingProject/docs/instructions" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/docs/read_me_from_students.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/Address.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/Author.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/Book.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/BookCopy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/ControllerInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/LibraryMember.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/LibrarySystemException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/LoginException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/Person.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/SystemController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/Auth.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccessFacade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/TestData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/AllBookIdsWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/AllMemberIdsWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/LibWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/LibrarySystem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/LoginWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/Util.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/library.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/resources/BOOKS" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/resources/MEMBERS" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/resources/USERS" afterDir="false" />
+    <list default="true" id="3e4edfad-57ea-44fb-ba67-42d5e2433640" name="Changes" comment="ide config">
+      <change afterPath="$PROJECT_DIR$/SwingProject/libs/flatlaf-2.4.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/main/ApplicationMain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,28 +42,29 @@
     "Application.librarysystem.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "ignore_missing_gitignore": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/kurro/IdeaProjects/Masters_of_Procrastination_and_Productivity_GroupE",
+    "last_opened_file_path": "/Users/kurro/IdeaProjects/Masters_of_Procrastination_and_Productivity_GroupE/SwingProject/libs",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "org.rust.first.attach.projects": "true",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.last.edited": "Facets",
+    "project.structure.proportion": "0.25683594",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.general",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/SwingProject/libs" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lab5/prob2" />
       <recent name="$PROJECT_DIR$/lab5/prob1" />
       <recent name="$PROJECT_DIR$/lab4/C/src/main/java" />
-      <recent name="$PROJECT_DIR$/lab3/prob3" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/SwingProject/src/main/resources" />
@@ -99,7 +74,20 @@
       <recent name="$PROJECT_DIR$/lab3" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.librarysystem.Main">
+  <component name="RunManager" selected="Application.ApplicationMain">
+    <configuration name="ApplicationMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.ApplicationMain" />
+      <module name="Masters_of_Procrastination_and_Productivity_GroupE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="business.Main" />
       <module name="Masters_of_Procrastination_and_Productivity_GroupE" />
@@ -126,22 +114,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="librarysystem.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="librarysystem.Main" />
-      <module name="Masters_of_Procrastination_and_Productivity_GroupE" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="librarysystem.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.librarysystem.Main" />
+        <item itemvalue="Application.ApplicationMain" />
         <item itemvalue="Application.TestData" />
         <item itemvalue="Application.Main" />
       </list>
@@ -176,7 +151,7 @@
       <workItem from="1733362298400" duration="962000" />
       <workItem from="1733364327576" duration="511000" />
       <workItem from="1733365383761" duration="145000" />
-      <workItem from="1733519530690" duration="698000" />
+      <workItem from="1733519530690" duration="1629000" />
     </task>
     <task id="LOCAL-00001" summary="add answers">
       <option name="closed" value="true" />
@@ -346,7 +321,23 @@
       <option name="project" value="LOCAL" />
       <updated>1733365518208</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="start up code">
+      <option name="closed" value="true" />
+      <created>1733520289307</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1733520289307</updated>
+    </task>
+    <task id="LOCAL-00023" summary="ide config">
+      <option name="closed" value="true" />
+      <created>1733520372477</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1733520372477</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -367,6 +358,8 @@
     <MESSAGE value="lab5" />
     <MESSAGE value="prob2" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="start up code" />
+    <MESSAGE value="ide config" />
+    <option name="LAST_COMMIT_MESSAGE" value="ide config" />
   </component>
 </project>
