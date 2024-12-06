@@ -1,18 +1,18 @@
 package dataaccess;
+
+import business.Book;
+import business.LibraryMember;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.nio.file.FileSystems;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
-
-import business.Book;
-import business.BookCopy;
-import business.LibraryMember;
-import dataaccess.DataAccessFacade.StorageType;
 
 
 public class DataAccessFacade implements DataAccess {
@@ -21,9 +21,13 @@ public class DataAccessFacade implements DataAccess {
 		BOOKS, MEMBERS, USERS;
 	}
 	
-	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
-			+ "/SwingProject/src/main/resources";
-	public static final String DATE_PATTERN = "MM/dd/yyyy";
+    public static final String DATE_PATTERN = "MM/dd/yyyy";
+
+	private static Path getOutputDir(StorageType type) throws URISyntaxException {
+		return Paths.get(
+				DataAccessFacade.class.getClassLoader().getResource(type.toString()).toURI()
+		);
+	}
 	
 	//implement: other save operations
 	public void saveNewMember(LibraryMember member) {
@@ -81,12 +85,14 @@ public class DataAccessFacade implements DataAccess {
 	static void saveToStorage(StorageType type, Object ob) {
 		ObjectOutputStream out = null;
 		try {
-			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
+			Path path = getOutputDir(type);
 			out = new ObjectOutputStream(Files.newOutputStream(path));
 			out.writeObject(ob);
 		} catch(IOException e) {
 			e.printStackTrace();
-		} finally {
+		} catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } finally {
 			if(out != null) {
 				try {
 					out.close();
@@ -99,7 +105,7 @@ public class DataAccessFacade implements DataAccess {
 		ObjectInputStream in = null;
 		Object retVal = null;
 		try {
-			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
+			Path path = getOutputDir(type);
 			in = new ObjectInputStream(Files.newInputStream(path));
 			retVal = in.readObject();
 		} catch(Exception e) {

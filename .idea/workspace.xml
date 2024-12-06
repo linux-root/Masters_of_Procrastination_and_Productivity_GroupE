@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e4edfad-57ea-44fb-ba67-42d5e2433640" name="Changes" comment="ide config">
-      <change afterPath="$PROJECT_DIR$/SwingProject/libs/flatlaf-2.4.jar" afterDir="false" />
+    <list default="true" id="3e4edfad-57ea-44fb-ba67-42d5e2433640" name="Changes" comment="flatlaf config">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/main/ApplicationMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccessFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccessFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/LibrarySystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/LibrarySystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/main/ApplicationMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/main/ApplicationMain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +38,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ApplicationMain.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.TestData.executor": "Run",
     "Application.librarysystem.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "ignore_missing_gitignore": "true",
     "kotlin-language-version-configured": "true",
@@ -51,7 +52,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "org.rust.first.attach.projects": "true",
-    "project.structure.last.edited": "Facets",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.25683594",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.general",
@@ -152,6 +153,7 @@
       <workItem from="1733364327576" duration="511000" />
       <workItem from="1733365383761" duration="145000" />
       <workItem from="1733519530690" duration="1629000" />
+      <workItem from="1733521168894" duration="1340000" />
     </task>
     <task id="LOCAL-00001" summary="add answers">
       <option name="closed" value="true" />
@@ -337,7 +339,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733520372477</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="flatlaf config">
+      <option name="closed" value="true" />
+      <created>1733521278112</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1733521278112</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -360,6 +370,7 @@
     <MESSAGE value="update" />
     <MESSAGE value="start up code" />
     <MESSAGE value="ide config" />
-    <option name="LAST_COMMIT_MESSAGE" value="ide config" />
+    <MESSAGE value="flatlaf config" />
+    <option name="LAST_COMMIT_MESSAGE" value="flatlaf config" />
   </component>
 </project>

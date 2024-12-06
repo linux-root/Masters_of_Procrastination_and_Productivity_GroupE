@@ -3,11 +3,8 @@ package main;
 import com.formdev.flatlaf.FlatLightLaf;
 import librarysystem.LibrarySystem;
 
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.Toolkit;
-
 import javax.swing.*;
+import java.awt.*;
 
 
 public class ApplicationMain {
