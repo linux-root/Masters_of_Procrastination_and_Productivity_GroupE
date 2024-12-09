@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3e4edfad-57ea-44fb-ba67-42d5e2433640" name="Changes" comment="fix path issue for both MacOS and Windows">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/ManageWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/ManageWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/PanelAddMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/PanelAddMember.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,10 +47,10 @@
     "Application.librarysystem.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "ritesh",
     "ignore_missing_gitignore": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/Masters_of_Procrastination_and_Productivity_GroupE-main/SwingProject/libs/flatlaf-2.4.jar",
+    "last_opened_file_path": "/Users/reetesh/Documents/library/Masters_of_Procrastination_and_Productivity_GroupE",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -129,14 +129,6 @@
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
