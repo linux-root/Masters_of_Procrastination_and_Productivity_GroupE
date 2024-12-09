@@ -5,20 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e4edfad-57ea-44fb-ba67-42d5e2433640" name="Changes" comment="fix path issue for both MacOS and Windows">
-      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/resources/BOOKCHECKOUTS" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/business/CheckoutRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/business/CheckoutRecord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccessFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccessFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/TestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/TestData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/ManageWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/ManageWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/PanelAddMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/PanelAddMember.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/PanelCheckoutBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/PanelCheckoutBook.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Rebase.Settings">
     <option name="NEW_BASE" value="origin/main" />
