@@ -1,17 +1,12 @@
 package librarysystem;
 
-import business.Address;
-import business.Author;
 import business.Book;
-import business.BookCopy;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.util.HashMap;
-import java.util.List;
 
 public class PanelAddBookCopy  {
     public JPanel getMainPanel() {

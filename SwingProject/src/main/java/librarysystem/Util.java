@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.JLabel;
 
@@ -63,6 +64,11 @@ public class Util {
 			return false;
 		}
 	}
+
+	public static String getFilePath(String fileName) {
+		return Objects.requireNonNull(LibrarySystem.class.getClassLoader().getResource(fileName)).getPath();
+	}
+
 	public static void centerFrameOnDesktop(Component f) {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		int height = toolkit.getScreenSize().height;
