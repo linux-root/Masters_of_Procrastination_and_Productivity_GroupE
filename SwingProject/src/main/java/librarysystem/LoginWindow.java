@@ -194,9 +194,6 @@ public class LoginWindow extends JFrame implements LibWindow {
     	
     	private void addLoginButtonListener(JButton butn) {
     		butn.addActionListener(evt -> {
-				//zh
-				System.out.println("username:" + username.getText());
-				System.out.println("password:" + password.getText());
 
 				DataAccess da = new DataAccessFacade();
 				HashMap<String, User> map = da.readUserMap();
