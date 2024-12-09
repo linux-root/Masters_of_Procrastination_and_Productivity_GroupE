@@ -1,162 +1,108 @@
 package librarysystem;
 
 import business.Book;
+import business.BookCopy;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PanelAddBookCopy  {
+public class PanelAddBookCopy {
+    private JPanel mainPanel;
+
+    public PanelAddBookCopy(DataAccess da) {
+        // Create the main JPanel with BorderLayout
+        mainPanel = new JPanel(new BorderLayout());
+
+        // Book list panel (Screen 1)
+        JPanel bookListPanel = new JPanel(new BorderLayout());
+        JLabel bookListLabel = new JLabel("Select a Book:");
+        bookListPanel.add(bookListLabel, BorderLayout.NORTH);
+
+        // JList to display books
+        Book[] books = da.readBooksMap().values().toArray(new Book[0]);
+        JList<Book> bookList = new JList<>(books);
+        bookList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane bookScrollPane = new JScrollPane(bookList);
+        bookListPanel.add(bookScrollPane, BorderLayout.CENTER);
+
+        // Add the bookListPanel to the left
+        mainPanel.add(bookListPanel, BorderLayout.WEST);
+
+        // Add book copy panel (Screen 2)
+        JPanel addBookCopyPanel = new JPanel();
+        addBookCopyPanel.setLayout(new BoxLayout(addBookCopyPanel, BoxLayout.Y_AXIS));
+        JLabel addCopyLabel = new JLabel("Add Book Copy");
+        addCopyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel selectedBookLabel = new JLabel("No book selected");
+        selectedBookLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel copiesLabel = new JLabel("Copies:");
+        copiesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Use a JSpinner for numeric input
+        JSpinner copyCountSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
+        copyCountSpinner.setMaximumSize(new Dimension(200, 30)); // Restrict size
+
+        JButton addCopyButton = new JButton("Add Copy");
+        addCopyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add components to the panel
+        addBookCopyPanel.add(addCopyLabel);
+        addBookCopyPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Spacer
+        addBookCopyPanel.add(selectedBookLabel);
+        addBookCopyPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        addBookCopyPanel.add(copiesLabel);
+        addBookCopyPanel.add(copyCountSpinner);
+        addBookCopyPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        addBookCopyPanel.add(addCopyButton);
+
+        // Add the addBookCopyPanel to the right
+        mainPanel.add(addBookCopyPanel, BorderLayout.CENTER);
+
+        // Add selection listener to the book list
+        bookList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                Book selectedBook = bookList.getSelectedValue();
+                if (selectedBook != null) {
+                    selectedBookLabel.setText("Selected Book: " + selectedBook.getTitle());
+                }
+            }
+        });
+
+        // Add action listener to the Add Copy button
+        addCopyButton.addActionListener(e -> {
+            Book selectedBook = bookList.getSelectedValue();
+            int copyCount = (int) copyCountSpinner.getValue();
+            if (selectedBook == null) {
+                JOptionPane.showMessageDialog(null, "Please select a book first.");
+            } else {
+                selectedBook.addCopy(copyCount);
+                da.saveNewBook(selectedBook);
+                JOptionPane.showMessageDialog(null,
+                        "Added " + copyCount + " copies to " + selectedBook.getTitle() + ".");
+                copyCountSpinner.setValue(1); // Reset to default value
+            }
+        });
+    }
+
     public JPanel getMainPanel() {
         return mainPanel;
     }
-    private JPanel mainPanel;
-    private JPanel topPanel;
-    private JPanel outerMiddle;
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Book Management");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(600, 400);
 
-    private JTextField ISBNField;
-    private JTextField titleField;
-    private JTextField maxCheckoutLengthField;
+            frame.add(new PanelAddBookCopy(new DataAccessFacade()).mainPanel);
 
-    private JTextField copyNumField;
-
-    private JTextField firstNameField;
-    private JTextField lastNameField;
-
-    private JTextField streetField;
-    private JTextField cityField;
-    private JTextField stateField;
-    private JTextField zipField;
-    private JTextField cellField;
-
-    public void clearData() {
-        //ISBNField.setText("");
-        titleField.setText("");
-        maxCheckoutLengthField.setText("");
-    }
-    public PanelAddBookCopy() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        defineTopPanel();
-        defineMiddlePanel();
-        mainPanel.add(topPanel, BorderLayout.NORTH);
-        mainPanel.add(outerMiddle, BorderLayout.CENTER);
-    }
-
-    public void defineTopPanel() {
-        topPanel = new JPanel();
-        JLabel AddBookLabel = new JLabel("Add Book Copy");
-        Util.adjustLabelFont(AddBookLabel, Util.DARK_BLUE, true);
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        topPanel.add(AddBookLabel);
-    }
-
-    public void defineMiddlePanel() {
-        outerMiddle = new JPanel();
-        outerMiddle.setLayout(new BorderLayout());
-
-        //set up left and right panels
-        JPanel middlePanel = new JPanel();
-        FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 25, 25);
-        middlePanel.setLayout(fl);
-        JPanel leftPanel = new JPanel();
-        JPanel rightPanel = new JPanel();
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-
-
-        JLabel ISBN = new JLabel("ISBN");
-        JLabel Title = new JLabel("Title");
-        JLabel maxCheckoutLength = new JLabel("Max Checkout Length");
-
-
-        ISBNField = new JTextField(10);
-        titleField = new JTextField(10);
-        maxCheckoutLengthField = new JTextField(10);
-
-
-
-        leftPanel.add(ISBN);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(Title);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(maxCheckoutLength);
-
-
-        rightPanel.add(ISBNField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(titleField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(maxCheckoutLengthField);
-
-
-        middlePanel.add(leftPanel);
-        middlePanel.add(rightPanel);
-        outerMiddle.add(middlePanel, BorderLayout.NORTH);
-
-        //add search button at bottom
-        JButton searchButton = new JButton("Search BookCopy");
-        searchButtonListener(searchButton);
-
-        //add button at bottom
-        JButton addBookButton = new JButton("Add Book Copy");
-        addButtonListener(addBookButton);
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(searchButton);
-        buttonPanel.add(addBookButton);
-        outerMiddle.add(buttonPanel, BorderLayout.SOUTH);
-
-    }
-
-    private void searchButtonListener(JButton butn){
-        butn.addActionListener(evt -> {
-            if (ISBNField.getText()==null || ISBNField.getText().isEmpty()) {
-                clearData();
-                JOptionPane.showMessageDialog(null, "Please enter a valid ISBN");
-                return;
-            }
-            DataAccess da = new DataAccessFacade();
-            HashMap<String, Book> map = da.readBooksMap();
-            if (!map.containsKey(ISBNField.getText())){
-                clearData();
-                JOptionPane.showMessageDialog(null, "Book doesn't exist");
-            }
-            else{
-                Book book = map.get(ISBNField.getText());
-                titleField.setText(book.getTitle());
-                titleField.setEditable(false);
-                maxCheckoutLengthField.setText(String.valueOf(book.getMaxCheckoutLength()));
-                maxCheckoutLengthField.setEditable(false);
-            }
-
+            frame.setVisible(true);
         });
     }
-
-    private void addButtonListener(JButton butn) {
-        butn.addActionListener(evt -> {
-            if (ISBNField.getText()==null || ISBNField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid ISBN");
-                return;
-            }
-            DataAccess da = new DataAccessFacade();
-            HashMap<String, Book> map = da.readBooksMap();
-            if (!map.containsKey(ISBNField.getText())){
-                JOptionPane.showMessageDialog(null, "Book doesn't exist");
-            }
-            else{
-                Book book = map.get(ISBNField.getText());
-                book.addCopy();
-                //da.saveNewBookCopy(new BookCopy(book, book.getCopies().length +1,true));
-                JOptionPane.showMessageDialog(null, "Add BookCopy Successfully");
-            }
-
-
-        });
-    }
-
 }
-

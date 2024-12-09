@@ -51,6 +51,12 @@ final public class Book implements Serializable {
 		newArr[copies.length] = new BookCopy(this, copies.length +1, true);
 		copies = newArr;
 	}
+
+	public void addCopy(Integer total){
+		for (int i = 0; i < total; i++) {
+			this.addCopy();
+		}
+	}
 	
 	
 	@Override
@@ -72,7 +78,7 @@ final public class Book implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "isbn: " + isbn + ", maxLength: " + maxCheckoutLength + ", available: " + isAvailable();
+		return title + ", "  + "Copies: " + copies.length;
 	}
 	
 	public int getNumCopies() {
