@@ -1,23 +1,29 @@
 package main;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import librarysystem.LibrarySystem;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URISyntaxException;
 
 
 public class ApplicationMain {
 
 	public static void main(String[] args) throws UnsupportedLookAndFeelException {
-       	UIManager.setLookAndFeel(new FlatLightLaf());
+       	UIManager.setLookAndFeel(new FlatIntelliJLaf());
         EventQueue.invokeLater(() ->
 	         {
 	            LibrarySystem.INSTANCE.setTitle("Sample Library Application");
 	            LibrarySystem.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	            
-	            LibrarySystem.INSTANCE.init();
-	            centerFrameOnDesktop(LibrarySystem.INSTANCE);
+
+                 try {
+                     LibrarySystem.INSTANCE.init();
+                 } catch (URISyntaxException e) {
+                     throw new RuntimeException(e);
+                 }
+                 centerFrameOnDesktop(LibrarySystem.INSTANCE);
 	            LibrarySystem.INSTANCE.setVisible(true);
 	         });
 	   }

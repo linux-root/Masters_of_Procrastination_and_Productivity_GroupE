@@ -3,9 +3,11 @@ package librarysystem;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -45,7 +47,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
      
     private LibrarySystem() {}
     
-    public void init() {
+    public void init() throws URISyntaxException {
     	formatContentPane();
     	setPathToImage();
     	insertSplashImage();
@@ -62,9 +64,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		getContentPane().add(mainPanel);	
 	}
     
-    private void setPathToImage() {
-    	String currDirectory = System.getProperty("user.dir");
-    	pathToImage = currDirectory+"\\src\\librarysystem\\library.jpg";
+    private void setPathToImage() throws URISyntaxException {
+		pathToImage = Objects.requireNonNull(LibrarySystem.class.getClassLoader().getResource("library.jpg")).getPath();
     }
     
     private void insertSplashImage() {

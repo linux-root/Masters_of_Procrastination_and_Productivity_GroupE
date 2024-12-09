@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e4edfad-57ea-44fb-ba67-42d5e2433640" name="Changes" comment="flatlaf config">
+    <list default="true" id="3e4edfad-57ea-44fb-ba67-42d5e2433640" name="Changes" comment="fix path issue for both MacOS and Windows">
+      <change afterPath="$PROJECT_DIR$/SwingProject/src/main/resources/bg.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccessFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/dataaccess/DataAccessFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/LibWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/LibWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/LibrarySystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/LibrarySystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/library.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/resources/library.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/main/ApplicationMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/main/ApplicationMain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +49,7 @@
     "git-widget-placeholder": "main",
     "ignore_missing_gitignore": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/kurro/IdeaProjects/Masters_of_Procrastination_and_Productivity_GroupE/SwingProject/libs",
+    "last_opened_file_path": "/Users/kurro/IdeaProjects/Masters_of_Procrastination_and_Productivity_GroupE/SwingProject/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -61,11 +63,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/SwingProject/src/main/resources" />
       <recent name="$PROJECT_DIR$/SwingProject/libs" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lab5/prob2" />
       <recent name="$PROJECT_DIR$/lab5/prob1" />
-      <recent name="$PROJECT_DIR$/lab4/C/src/main/java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/SwingProject/src/main/resources" />
@@ -153,7 +155,8 @@
       <workItem from="1733364327576" duration="511000" />
       <workItem from="1733365383761" duration="145000" />
       <workItem from="1733519530690" duration="1629000" />
-      <workItem from="1733521168894" duration="1340000" />
+      <workItem from="1733521168894" duration="2420000" />
+      <workItem from="1733746653290" duration="850000" />
     </task>
     <task id="LOCAL-00001" summary="add answers">
       <option name="closed" value="true" />
@@ -347,7 +350,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733521278112</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="fix path issue for both MacOS and Windows">
+      <option name="closed" value="true" />
+      <created>1733522680738</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1733522680738</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,6 +382,7 @@
     <MESSAGE value="start up code" />
     <MESSAGE value="ide config" />
     <MESSAGE value="flatlaf config" />
-    <option name="LAST_COMMIT_MESSAGE" value="flatlaf config" />
+    <MESSAGE value="fix path issue for both MacOS and Windows" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix path issue for both MacOS and Windows" />
   </component>
 </project>
