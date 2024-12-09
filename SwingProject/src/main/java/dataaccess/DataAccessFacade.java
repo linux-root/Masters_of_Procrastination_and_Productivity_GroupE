@@ -13,6 +13,7 @@ import business.Book;
 import business.BookCopy;
 import business.LibraryMember;
 import dataaccess.DataAccessFacade.StorageType;
+import librarysystem.Util;
 
 
 public class DataAccessFacade implements DataAccess {
@@ -21,8 +22,8 @@ public class DataAccessFacade implements DataAccess {
 		BOOKS, MEMBERS, USERS, BOOKCOPIES;
 	}
 	
-	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
-			+ "/SwingProject/src/main/resources";
+	public static final String OUTPUT_DIR = Util.getFilePath("");
+
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations

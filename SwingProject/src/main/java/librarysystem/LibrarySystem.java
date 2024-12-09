@@ -65,7 +65,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	}
     
     private void setPathToImage() {
-		pathToImage = Objects.requireNonNull(LibrarySystem.class.getClassLoader().getResource("library.jpg")).getPath();
+		pathToImage = Util.getFilePath("library.jpg");
     }
     
     private void insertSplashImage() {
