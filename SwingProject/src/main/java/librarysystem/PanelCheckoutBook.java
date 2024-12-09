@@ -120,7 +120,7 @@ public class PanelCheckoutBook  {
             else{
                 bookCopy.changeAvailability();
 
-                CheckoutRecord checkoutRecord = new CheckoutRecord(member, book);
+                CheckoutRecord checkoutRecord = new CheckoutRecord(member);
                 checkoutRecord.addCheckoutRecordEntry(bookCopy, new Date(), null);
                 //persisted...
 
