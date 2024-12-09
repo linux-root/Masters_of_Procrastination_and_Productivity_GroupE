@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
@@ -65,7 +66,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	}
     
     private void setPathToImage() {
-		pathToImage = Objects.requireNonNull(LibrarySystem.class.getClassLoader().getResource("library.jpg")).getPath();
+		Path imagePath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "library.jpg");
+		pathToImage = imagePath.toAbsolutePath().toString();
+
+		//pathToImage = Objects.requireNonNull(LibrarySystem.class.getClassLoader().getResource("library.jpg")).getPath();
     }
     
     private void insertSplashImage() {

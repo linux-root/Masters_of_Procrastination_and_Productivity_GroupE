@@ -35,10 +35,10 @@ public class ManageWindow extends JFrame {
         createButtonBar();
         // set up split panes
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, linkList, cards);
-        splitPane.setDividerLocation(100);
+        splitPane.setDividerLocation(150);
 
         JSplitPane outerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPane, buttonBar);
-        outerPane.setDividerLocation(400);
+        outerPane.setDividerLocation(500);
 
         add(outerPane, BorderLayout.CENTER);
     }
