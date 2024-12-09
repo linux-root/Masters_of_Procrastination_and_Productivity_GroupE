@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e4edfad-57ea-44fb-ba67-42d5e2433640" name="Changes" comment="fix path issue for both MacOS and Windows">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/ManageWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwingProject/src/main/java/librarysystem/ManageWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +158,7 @@
       <workItem from="1733519530690" duration="1629000" />
       <workItem from="1733521168894" duration="2420000" />
       <workItem from="1733746653290" duration="850000" />
-      <workItem from="1733765570067" duration="614000" />
+      <workItem from="1733765570067" duration="1916000" />
     </task>
     <task id="LOCAL-00001" summary="add answers">
       <option name="closed" value="true" />
