@@ -23,11 +23,11 @@ public class ManageWindow extends JFrame {
         String[] items;
         //auth
         if (auth == Auth.ADMIN){
-            items = new String[]{"Add Member", "Add Book Copy"};
+            items = new String[]{"Welcome", "Add Member", "Add Book Copy"};
         }else if (auth == Auth.LIBRARIAN){
-            items = new String[]{"Checkout Book"};
+            items = new String[]{"Welcome", "Checkout Book"};
         }else{
-            items = new String[]{"Add Member", "Add Book Copy", "Checkout Book"};
+            items = new String[]{"Welcome", "Add Member", "Add Book Copy", "Checkout Book"};
         }
 
         linkList = new JList<String>(items);
@@ -47,12 +47,18 @@ public class ManageWindow extends JFrame {
     /* Organize panels into a CardLayout */
     public void createPanels() {
 
+        JPanel panelWelcome = new JPanel();
+        JLabel labelWelcome = new JLabel("Welcome to Library System");
+        labelWelcome.setFont(new Font("Arial", Font.BOLD, 20));
+        panelWelcome.add(labelWelcome);
+
         JPanel panelAddMember = (new PanelAddMember()).getMainPanel();
         JPanel panelAddBook   = (new PanelAddBook()).getMainPanel();
         JPanel PanelAddBookCopy = (new PanelAddBookCopy()).getMainPanel();
         JPanel panelCheckoutBook = (new PanelCheckoutBook()).getMainPanel();
 
         cards = new JPanel(new CardLayout());
+        cards.add(panelWelcome, "Welcome");
         cards.add(panelAddMember, "Add Member");
         //cards.add(panelAddBook, "Add Book");
         cards.add(PanelAddBookCopy, "Add Book Copy");
