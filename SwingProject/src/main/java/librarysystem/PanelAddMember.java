@@ -51,86 +51,51 @@ public class PanelAddMember  {
     }
 
     public void defineMiddlePanel() {
-        outerMiddle = new JPanel();
-        outerMiddle.setLayout(new BorderLayout());
+        outerMiddle = new JPanel(new BorderLayout());
 
-        //set up left and right panels
-        JPanel middlePanel = new JPanel();
-        FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 25, 25);
-        middlePanel.setLayout(fl);
-        JPanel leftPanel = new JPanel();
-        JPanel rightPanel = new JPanel();
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        // Create form panel with GridBagLayout
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.WEST;
 
-        JLabel ID = new JLabel("ID");
-        JLabel firstName = new JLabel("First Name");
-        JLabel lastName = new JLabel("Last Name");
-        JLabel street   = new JLabel("Street");
-        JLabel city     = new JLabel("City");
-        JLabel state    = new JLabel("State");
-        JLabel zip      = new JLabel("Zip");
-        JLabel cell     = new JLabel("Cell");
+        // Define labels and text fields
+        JLabel[] labels = {
+                new JLabel("ID"), new JLabel("First Name"), new JLabel("Last Name"),
+                new JLabel("Street"), new JLabel("City"), new JLabel("State"),
+                new JLabel("Zip"), new JLabel("Cell")
+        };
 
-        IDField = new JTextField(10);
-        firstNameField = new JTextField(10);
-        lastNameField = new JTextField(10);
-        streetField = new JTextField(10);
-        cityField = new JTextField(10);
-        stateField = new JTextField(10);
-        zipField = new JTextField(10);
-        cellField = new JTextField(10);
+        JTextField[] fields = {
+                IDField = new JTextField(15), firstNameField = new JTextField(15),
+                lastNameField = new JTextField(15), streetField = new JTextField(15),
+                cityField = new JTextField(15), stateField = new JTextField(15),
+                zipField = new JTextField(15), cellField = new JTextField(15)
+        };
 
+        // Add labels and text fields in aligned rows
+        for (int i = 0; i < labels.length; i++) {
+            gbc.gridx = 0; gbc.gridy = i;
+            formPanel.add(labels[i], gbc);
 
-        leftPanel.add(ID);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(firstName);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(lastName);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(street);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(city);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(state);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(zip);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(cell);
+            gbc.gridx = 1;
+            formPanel.add(fields[i], gbc);
+        }
 
+        // Add form panel to the main container
+        outerMiddle.add(formPanel, BorderLayout.CENTER);
 
-        rightPanel.add(IDField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(firstNameField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(lastNameField);
+        // Add button at the bottom
+        JButton addMemberButton = new JButton("Add Member");
+        addMemberButtonListener(addMemberButton);
 
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(streetField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(cityField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(stateField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(zipField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(cellField);
-
-        middlePanel.add(leftPanel);
-        middlePanel.add(rightPanel);
-        outerMiddle.add(middlePanel, BorderLayout.NORTH);
-
-        //add button at bottom
-        JButton addBookButton = new JButton("Add Member");
-        addMemberButtonListener(addBookButton);
-        JPanel addBookButtonPanel = new JPanel();
-        addBookButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        addBookButtonPanel.add(addBookButton);
-        outerMiddle.add(addBookButtonPanel, BorderLayout.SOUTH);
-
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(addMemberButton);
+        outerMiddle.add(buttonPanel, BorderLayout.SOUTH);
     }
-    private void addMemberButtonListener(JButton butn) {
-        butn.addActionListener(evt -> {
+
+    private void addMemberButtonListener(JButton btn) {
+        btn.addActionListener(evt -> {
             if (IDField.getText()==null || IDField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please enter a valid ID");
                 return;
@@ -147,10 +112,23 @@ public class PanelAddMember  {
                         IDField.getText(), firstNameField.getText(), lastNameField.getName(), cellField.getText(), address);
                 da.saveNewMember(libraryMember);
                 JOptionPane.showMessageDialog(null,"successfully added");
+                resetFormFields();
             }
 
 
         });
     }
 
+
+
+    private void resetFormFields() {
+        JTextField[] fields = {
+                IDField, firstNameField, lastNameField, streetField,
+                cityField, stateField, zipField, cellField
+        };
+
+        for (JTextField fifeld : fields) {
+            field.setText("");
+        }
+    }
 }
