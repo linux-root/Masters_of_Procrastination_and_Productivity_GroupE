@@ -1,6 +1,7 @@
 package librarysystem;
 
 import dataaccess.Auth;
+import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +45,7 @@ public class ManageWindow extends JFrame {
 
     /* Organize panels into a CardLayout */
     public void createPanels() {
+        var da = new DataAccessFacade();
 
         JPanel panelWelcome = new JPanel();
         JLabel labelWelcome = new JLabel("Welcome to Library System");
@@ -52,7 +54,7 @@ public class ManageWindow extends JFrame {
 
         JPanel panelAddMember = (new PanelAddMember()).getMainPanel();
         JPanel panelAddBook   = (new PanelAddBook()).getMainPanel();
-        JPanel PanelAddBookCopy = (new PanelAddBookCopy()).getMainPanel();
+        JPanel PanelAddBookCopy = (new PanelAddBookCopy(da)).getMainPanel();
         JPanel panelCheckoutBook = (new PanelCheckoutBook()).getMainPanel();
         JPanel panelAllMembers = (new PanelAllMembers()).getMainPanel();
 
