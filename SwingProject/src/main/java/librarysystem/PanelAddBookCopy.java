@@ -1,14 +1,11 @@
 package librarysystem;
 
 import business.Book;
-import business.BookCopy;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PanelAddBookCopy {
     private JPanel mainPanel;
