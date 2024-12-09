@@ -47,7 +47,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
      
     private LibrarySystem() {}
     
-    public void init() throws URISyntaxException {
+    public void init() {
     	formatContentPane();
     	setPathToImage();
     	insertSplashImage();
@@ -64,7 +64,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		getContentPane().add(mainPanel);	
 	}
     
-    private void setPathToImage() throws URISyntaxException {
+    private void setPathToImage() {
 		pathToImage = Objects.requireNonNull(LibrarySystem.class.getClassLoader().getResource("library.jpg")).getPath();
     }
     

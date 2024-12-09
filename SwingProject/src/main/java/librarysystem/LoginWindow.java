@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -19,10 +20,18 @@ import javax.swing.JOptionPane;
 import business.ControllerInterface;
 
 import business.SystemController;
+import dataaccess.Auth;
+import dataaccess.DataAccess;
+import dataaccess.DataAccessFacade;
+import dataaccess.User;
+
+import static librarysystem.Util.centerFrameOnDesktop;
 
 
 public class LoginWindow extends JFrame implements LibWindow {
     public static final LoginWindow INSTANCE = new LoginWindow();
+
+	public static JFrame manageFrame;//zh
 	
 	private boolean isInitialized = false;
 	
@@ -61,26 +70,27 @@ public class LoginWindow extends JFrame implements LibWindow {
 	/* This class is a singleton */
     private LoginWindow () {}
     
-    public void init() {     		
-    		mainPanel = new JPanel();
-    		defineUpperHalf();
-    		defineMiddleHalf();
-    		defineLowerHalf();
-    		BorderLayout bl = new BorderLayout();
-    		bl.setVgap(30);
-    		mainPanel.setLayout(bl);
-    					
-    		mainPanel.add(upperHalf, BorderLayout.NORTH);
-    		mainPanel.add(middleHalf, BorderLayout.CENTER);
-    		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
-    		getContentPane().add(mainPanel);
-    		isInitialized(true);
-    		pack();
-    		//setSize(660, 500);
+    public void init() {
+		if (isInitialized) return;
 
+		mainPanel = new JPanel();
+		defineUpperHalf();
+		defineMiddleHalf();
+		defineLowerHalf();
+		BorderLayout bl = new BorderLayout();
+		bl.setVgap(30);
+		mainPanel.setLayout(bl);
+
+		mainPanel.add(upperHalf, BorderLayout.NORTH);
+		mainPanel.add(middleHalf, BorderLayout.CENTER);
+		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
+		getContentPane().add(mainPanel);
+		isInitialized(true);
+		pack();
+		//setSize(660, 500);
     	
     }
-    private void defineUpperHalf() {
+    	private void defineUpperHalf() {
     		
     		upperHalf = new JPanel();
     		upperHalf.setLayout(new BorderLayout());
@@ -111,6 +121,7 @@ public class LoginWindow extends JFrame implements LibWindow {
     		lowerHalf.add(backButton);
     		
     	}
+
     	private void defineTopPanel() {
     		topPanel = new JPanel();
     		JPanel intPanel = new JPanel(new BorderLayout());
@@ -122,9 +133,6 @@ public class LoginWindow extends JFrame implements LibWindow {
     		topPanel.add(intPanel);
     		
     	}
-    	
-    	
-    	
     	private void defineMiddlePanel() {
     		middlePanel=new JPanel();
     		middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -186,7 +194,34 @@ public class LoginWindow extends JFrame implements LibWindow {
     	
     	private void addLoginButtonListener(JButton butn) {
     		butn.addActionListener(evt -> {
-    			JOptionPane.showMessageDialog(this,"Successful Login");
+				//zh
+				System.out.println("username:" + username.getText());
+				System.out.println("password:" + password.getText());
+
+				DataAccess da = new DataAccessFacade();
+				HashMap<String, User> map = da.readUserMap();
+				if(!map.containsKey(username.getText())) {
+					JOptionPane.showMessageDialog(this,"Failed to Login! The user does not exist");
+				}
+				else if (!map.get(username.getText()).getPassword().equals(password.getText())) {//encrypt...
+					JOptionPane.showMessageDialog(this,"Failed to Login! Username or password is incorrect");
+				}
+				else{
+					//JOptionPane.showMessageDialog(this,"Successful Login");
+					User user = map.get(username.getText());
+					Auth auth = user.getAuthorization();
+					System.out.println(auth);
+
+					LibrarySystem.hideAllWindows();
+
+					manageFrame = new ManageWindow(auth);
+					manageFrame.setTitle("Library Management System");
+					manageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					Util.centerFrameOnDesktop(manageFrame);
+					manageFrame.setVisible(true);
+				}
+
+    			//JOptionPane.showMessageDialog(this,"Successful Login");
     				
     		});
     	}

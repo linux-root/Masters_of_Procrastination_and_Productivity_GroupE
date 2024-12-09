@@ -1,33 +1,29 @@
 package dataaccess;
-
-import business.Book;
-import business.LibraryMember;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.URISyntaxException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+
+import business.Book;
+import business.BookCopy;
+import business.LibraryMember;
+import dataaccess.DataAccessFacade.StorageType;
 
 
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS;
+		BOOKS, MEMBERS, USERS, BOOKCOPIES;
 	}
 	
-    public static final String DATE_PATTERN = "MM/dd/yyyy";
-
-	private static Path getOutputDir(StorageType type) throws URISyntaxException {
-		return Paths.get(
-				DataAccessFacade.class.getClassLoader().getResource(type.toString()).toURI()
-		);
-	}
+	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
+			+ "/SwingProject/src/main/resources";
+	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations
 	public void saveNewMember(LibraryMember member) {
@@ -36,7 +32,29 @@ public class DataAccessFacade implements DataAccess {
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);	
 	}
-	
+
+	//zh
+	public void saveNewBook(Book book) {
+		HashMap<String, Book> map = readBooksMap();
+		String isbn = book.getIsbn();
+		map.put(isbn, book);
+		saveToStorage(StorageType.BOOKS, map);
+	}
+
+	//zh
+	public void saveNewBookCopy(BookCopy bookCopy) {
+		HashMap<Integer,BookCopy> map = readBookCopiesMap();
+		Integer copyNum = bookCopy.getCopyNum();
+		map.put(copyNum, bookCopy);
+		saveToStorage(StorageType.BOOKCOPIES, map);
+	}
+
+	public  HashMap<Integer,BookCopy> readBookCopiesMap() {
+		//Returns a Map with name/value pairs being
+		//   copyNum -> Book
+		return (HashMap<Integer,BookCopy>) readFromStorage(StorageType.BOOKCOPIES);
+	}
+
 	@SuppressWarnings("unchecked")
 	public  HashMap<String,Book> readBooksMap() {
 		//Returns a Map with name/value pairs being
@@ -85,14 +103,12 @@ public class DataAccessFacade implements DataAccess {
 	static void saveToStorage(StorageType type, Object ob) {
 		ObjectOutputStream out = null;
 		try {
-			Path path = getOutputDir(type);
+			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
 			out = new ObjectOutputStream(Files.newOutputStream(path));
 			out.writeObject(ob);
 		} catch(IOException e) {
 			e.printStackTrace();
-		} catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        } finally {
+		} finally {
 			if(out != null) {
 				try {
 					out.close();
@@ -105,7 +121,7 @@ public class DataAccessFacade implements DataAccess {
 		ObjectInputStream in = null;
 		Object retVal = null;
 		try {
-			Path path = getOutputDir(type);
+			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
 			in = new ObjectInputStream(Files.newInputStream(path));
 			retVal = in.readObject();
 		} catch(Exception e) {
