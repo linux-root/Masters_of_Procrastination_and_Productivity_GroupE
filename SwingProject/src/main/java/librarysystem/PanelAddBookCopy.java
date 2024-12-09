@@ -9,24 +9,18 @@ import java.awt.*;
 
 public class PanelAddBookCopy {
     private JPanel mainPanel;
+    private JPanel bookListPanel;
+    private JList<Book> bookList;
+    private DataAccess dataAccess;
 
     public PanelAddBookCopy(DataAccess da) {
+        this.dataAccess = da;
+
         // Create the main JPanel with BorderLayout
         mainPanel = new JPanel(new BorderLayout());
 
-        // Book list panel (Screen 1)
-        JPanel bookListPanel = new JPanel(new BorderLayout());
-        JLabel bookListLabel = new JLabel("Select a Book:");
-        bookListPanel.add(bookListLabel, BorderLayout.NORTH);
-
-        // JList to display books
-        Book[] books = da.readBooksMap().values().toArray(new Book[0]);
-        JList<Book> bookList = new JList<>(books);
-        bookList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane bookScrollPane = new JScrollPane(bookList);
-        bookListPanel.add(bookScrollPane, BorderLayout.CENTER);
-
-        // Add the bookListPanel to the left
+        // Initialize and add the book list panel
+        bookListPanel = createBookListPanel();
         mainPanel.add(bookListPanel, BorderLayout.WEST);
 
         // Add book copy panel (Screen 2)
@@ -78,13 +72,51 @@ public class PanelAddBookCopy {
             if (selectedBook == null) {
                 JOptionPane.showMessageDialog(null, "Please select a book first.");
             } else {
-                selectedBook.addCopy(copyCount);
-                da.saveNewBook(selectedBook);
-                JOptionPane.showMessageDialog(null,
-                        "Added " + copyCount + " copies to " + selectedBook.getTitle() + ".");
-                copyCountSpinner.setValue(1); // Reset to default value
+               selectedBook.addCopy(copyCount);
+               dataAccess.saveNewBook(selectedBook);
+               JOptionPane.showMessageDialog(null,
+                       "Added " + copyCount + " copies to " + selectedBook.getTitle() + ".");
+               copyCountSpinner.setValue(1); // Reset to default value
+
+               // Refresh the JList model and keep the selected book updated
+               Book[] updatedBooks = dataAccess.readBooksMap().values().toArray(new Book[0]);
+               bookList.setListData(updatedBooks);
+
+               // Update the selected book label
+               bookList.setSelectedValue(selectedBook, true); // Re-select the updated book
+               selectedBookLabel.setText("Selected Book: " + selectedBook.getTitle());
             }
         });
+    }
+
+    private JPanel createBookListPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel bookListLabel = new JLabel("Select a Book:");
+        panel.add(bookListLabel, BorderLayout.NORTH);
+
+        // Create JList to display books
+        Book[] books = dataAccess.readBooksMap().values().toArray(new Book[0]);
+        bookList = new JList<>(books);
+        bookList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane bookScrollPane = new JScrollPane(bookList);
+        panel.add(bookScrollPane, BorderLayout.CENTER);
+
+        return panel;
+    }
+
+    private void refreshBookListPanel() {
+        // Remove the old book list panel
+        mainPanel.remove(bookListPanel);
+
+        // Recreate the book list panel with updated data
+        bookListPanel = createBookListPanel();
+
+        // Add the updated panel to the main panel
+        mainPanel.add(bookListPanel, BorderLayout.WEST);
+
+        // Revalidate and repaint the main panel to reflect the changes
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
 
     public JPanel getMainPanel() {
