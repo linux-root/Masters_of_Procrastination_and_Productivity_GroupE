@@ -16,7 +16,6 @@ public class ManageWindow extends JFrame {
     JPanel buttonBar;
 
     public ManageWindow(Auth auth) {
-
         setSize(660, 500);
 
         String[] items;
