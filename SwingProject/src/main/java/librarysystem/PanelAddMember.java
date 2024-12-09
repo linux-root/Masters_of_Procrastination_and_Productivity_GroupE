@@ -111,10 +111,22 @@ public class PanelAddMember  {
                         IDField.getText(), firstNameField.getText(), lastNameField.getName(), cellField.getText(), address);
                 da.saveNewMember(libraryMember);
                 JOptionPane.showMessageDialog(null,"successfully added");
+                resetFormFields();
             }
 
 
         });
+    }
+
+    private void resetFormFields() {
+        JTextField[] fields = {
+                IDField, firstNameField, lastNameField, streetField,
+                cityField, stateField, zipField, cellField
+        };
+
+        for (JTextField field : fields) {
+            field.setText("");
+        }
     }
 
 }

@@ -25,7 +25,7 @@ public class ManageWindow extends JFrame {
         }else if (auth == Auth.LIBRARIAN){
             items = new String[]{"Welcome", "Checkout Book"};
         }else{
-            items = new String[]{"Welcome", "Add Member", "Add Book Copy", "Checkout Book"};
+            items = new String[]{"Welcome", "Add Member", "Add Book Copy", "Checkout Book","All Members"};
         }
 
         linkList = new JList<String>(items);

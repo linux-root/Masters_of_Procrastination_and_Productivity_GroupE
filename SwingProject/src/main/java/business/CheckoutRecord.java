@@ -32,4 +32,8 @@ public class CheckoutRecord implements Serializable {
     public void setMember(LibraryMember member) {
         this.member = member;
     }
+
+
+    private static final long serialVersionUID = -2226197332290714013L;
+
 }
