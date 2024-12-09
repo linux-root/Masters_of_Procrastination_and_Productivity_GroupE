@@ -19,7 +19,6 @@ public class ManageWindow extends JFrame {
 
         setSize(660, 500);
 
-        //String[] items = {"Add Member", "Search Member", "Add Book", "Add Book Copy", "Checkout Book"};
         String[] items;
         //auth
         if (auth == Auth.ADMIN){
