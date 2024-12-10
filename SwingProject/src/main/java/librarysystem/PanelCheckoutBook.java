@@ -123,8 +123,11 @@ public class PanelCheckoutBook  {
                 CheckoutRecord checkoutRecord = new CheckoutRecord(member);
                 checkoutRecord.addCheckoutRecordEntry(bookCopy, new Date(), null);
                 //persisted...
+                da.saveCheckoutRecord(checkoutRecord);
+
 
                 JOptionPane.showMessageDialog(null,"successfully Checkout Book");
+                chearFields();
             }
 
 
@@ -133,4 +136,8 @@ public class PanelCheckoutBook  {
         });
     }
 
+    public void chearFields() {
+        memberIDField.setText("");
+        ISBNField.setText("");
+    }
 }

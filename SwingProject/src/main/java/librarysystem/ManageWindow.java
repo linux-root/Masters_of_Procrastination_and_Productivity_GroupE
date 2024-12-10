@@ -25,7 +25,7 @@ public class ManageWindow extends JFrame {
         }else if (auth == Auth.LIBRARIAN){
             items = new String[]{"Welcome", "Checkout Book"};
         }else{
-            items = new String[]{"Welcome", "Add Member", "Add Book Copy", "Checkout Book"};
+            items = new String[]{"Welcome", "Add Member", "Add Book Copy", "Checkout Book","Add Book","All Members"};
         }
 
         linkList = new JList<String>(items);
@@ -54,6 +54,9 @@ public class ManageWindow extends JFrame {
         JPanel panelAddBook   = (new PanelAddBook()).getMainPanel();
         JPanel PanelAddBookCopy = (new PanelAddBookCopy()).getMainPanel();
         JPanel panelCheckoutBook = (new PanelCheckoutBook()).getMainPanel();
+        JPanel panelAllMembers = (new PanelAllMembers()).getMainPanel();
+
+
 
         cards = new JPanel(new CardLayout());
         cards.add(panelWelcome, "Welcome");
@@ -61,6 +64,8 @@ public class ManageWindow extends JFrame {
         //cards.add(panelAddBook, "Add Book");
         cards.add(PanelAddBookCopy, "Add Book Copy");
         cards.add(panelCheckoutBook, "Checkout Book");
+        cards.add(panelAddBook, "Add Book");
+        cards.add(panelAllMembers, "All Members");
 
         //connect JList elements to CardLayout panels
         linkList.addListSelectionListener(event -> {

@@ -3,15 +3,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Member;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
-import business.Book;
-import business.BookCopy;
-import business.LibraryMember;
+import business.*;
 import dataaccess.DataAccessFacade.StorageType;
 import librarysystem.Util;
 
@@ -19,7 +18,7 @@ import librarysystem.Util;
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS, BOOKCOPIES;
+		BOOKS, MEMBERS, USERS, BOOKCOPIES, BOOKCHECKOUTS;
 	}
 	
 	public static final String OUTPUT_DIR = Util.getFilePath("");
@@ -50,11 +49,25 @@ public class DataAccessFacade implements DataAccess {
 		saveToStorage(StorageType.BOOKCOPIES, map);
 	}
 
+	public void saveCheckoutRecord(CheckoutRecord record) {
+		HashMap<String, CheckoutRecord> records = readCheckoutRecordsMap();
+		records.put(record.getMember().getMemberId(),record);
+		saveToStorage(StorageType.BOOKCHECKOUTS, records);
+	}
+
 	public  HashMap<Integer,BookCopy> readBookCopiesMap() {
 		//Returns a Map with name/value pairs being
 		//   copyNum -> Book
 		return (HashMap<Integer,BookCopy>) readFromStorage(StorageType.BOOKCOPIES);
 	}
+
+	public  HashMap<String,CheckoutRecord> readCheckoutRecordsMap() {
+		//Returns a Map with name/value pairs being
+		//   memberId -> CheckoutRecord
+		return (HashMap<String,CheckoutRecord>) readFromStorage(StorageType.BOOKCHECKOUTS);
+	}
+
+
 
 	@SuppressWarnings("unchecked")
 	public  HashMap<String,Book> readBooksMap() {
@@ -94,13 +107,13 @@ public class DataAccessFacade implements DataAccess {
 		userList.forEach(user -> users.put(user.getId(), user));
 		saveToStorage(StorageType.USERS, users);
 	}
- 
+
 	static void loadMemberMap(List<LibraryMember> memberList) {
 		HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
 		memberList.forEach(member -> members.put(member.getMemberId(), member));
 		saveToStorage(StorageType.MEMBERS, members);
 	}
-	
+
 	static void saveToStorage(StorageType type, Object ob) {
 		ObjectOutputStream out = null;
 		try {
