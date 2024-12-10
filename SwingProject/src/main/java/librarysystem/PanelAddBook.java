@@ -55,98 +55,49 @@ public class PanelAddBook  {
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(AddBookLabel);
     }
+    private void defineMiddlePanel() {
+        outerMiddle = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-    public void defineMiddlePanel() {
-        outerMiddle = new JPanel();
-        outerMiddle.setLayout(new BorderLayout());
+        int fieldHeight = 30;
 
-        //set up left and right panels
-        JPanel middlePanel = new JPanel();
-        FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 25, 25);
-        middlePanel.setLayout(fl);
-        JPanel leftPanel = new JPanel();
-        JPanel rightPanel = new JPanel();
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        // Add form fields
+        addFormField(outerMiddle, "ISBN", ISBNField = new JTextField(), gbc, fieldHeight);
+        addFormField(outerMiddle, "Title", titleField = new JTextField(), gbc, fieldHeight);
+        addFormField(outerMiddle, "Max Checkout Length", maxCheckoutLengthField = new JTextField(), gbc, fieldHeight);
+        addFormField(outerMiddle, "Name", firstNameField = new JTextField(), gbc, fieldHeight);
+        addFormField(outerMiddle, "Address", cityField = new JTextField(), gbc, fieldHeight);
+        addFormField(outerMiddle, "Cell", cellField = new JTextField(), gbc, fieldHeight);
 
+        mainPanel.add(outerMiddle, BorderLayout.CENTER);
 
-        JLabel ISBN = new JLabel("ISBN");
-        JLabel Title = new JLabel("Title");
-        JLabel maxCheckoutLength = new JLabel("Max Checkout Length");
-        JLabel firstName = new JLabel("Author First Name");
-        JLabel lastName = new JLabel("Author Last Name");
-        JLabel street   = new JLabel("Street");
-        JLabel city     = new JLabel("City");
-        JLabel state    = new JLabel("State");
-        JLabel zip      = new JLabel("Zip");
-        JLabel cell     = new JLabel("Cell");
-
-        ISBNField = new JTextField(10);
-        titleField = new JTextField(10);
-        maxCheckoutLengthField = new JTextField(10);
-        firstNameField = new JTextField(10);
-        lastNameField = new JTextField(10);
-        streetField = new JTextField(10);
-        cityField = new JTextField(10);
-        stateField = new JTextField(10);
-        zipField = new JTextField(10);
-        cellField = new JTextField(10);
-
-        leftPanel.add(ISBN);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(Title);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(maxCheckoutLength);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(firstName);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(lastName);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(street);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(city);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(state);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(zip);
-        leftPanel.add(Box.createRigidArea(new Dimension(0,12)));
-        leftPanel.add(cell);
-
-
-        rightPanel.add(ISBNField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(titleField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(maxCheckoutLengthField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-
-        rightPanel.add(firstNameField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(lastNameField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(streetField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(cityField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(stateField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(zipField);
-        rightPanel.add(Box.createRigidArea(new Dimension(0,8)));
-        rightPanel.add(cellField);
-
-        middlePanel.add(leftPanel);
-        middlePanel.add(rightPanel);
-        outerMiddle.add(middlePanel, BorderLayout.NORTH);
-
-        //add button at bottom
+        // Add Book Button
         JButton addBookButton = new JButton("Add Book");
-        addMemberButtonListener(addBookButton);
-        JPanel addBookButtonPanel = new JPanel();
-        addBookButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        addBookButtonPanel.add(addBookButton);
-        outerMiddle.add(addBookButtonPanel, BorderLayout.SOUTH);
-
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(addBookButton);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
     }
+
+    private void addFormField(JPanel panel, String label, JTextField field, GridBagConstraints gbc, int fieldHeight) {
+        JLabel lbl = new JLabel(label + ":");
+        lbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.weightx = 0.2;
+        panel.add(lbl, gbc);
+
+        field.setFont(new Font("Arial", Font.PLAIN, 16));
+        field.setPreferredSize(new Dimension(200, fieldHeight));
+        gbc.gridx = 1;
+        gbc.weightx = 0.8;
+        panel.add(field, gbc);
+    }
+
+
+
+
     private void addMemberButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
             if (ISBNField.getText()==null || ISBNField.getText().isEmpty()) {
