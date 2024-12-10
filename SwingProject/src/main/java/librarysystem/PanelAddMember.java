@@ -3,14 +3,16 @@ package librarysystem;
 import business.Address;
 import business.LibraryMember;
 import dataaccess.DataAccess;
-import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.HashMap;
 
 public class PanelAddMember {
+    private PanelAllMembers allMembersScreen;
     private DataAccess da;
     private JPanel mainPanel;
     private JPanel topPanel;
@@ -29,8 +31,9 @@ public class PanelAddMember {
         return mainPanel;
     }
 
-    public PanelAddMember(DataAccess da) {
+    public PanelAddMember(DataAccess da, PanelAllMembers allMembersScreen) {
         this.da = da;
+        this.allMembersScreen = allMembersScreen;
         mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
 
@@ -171,6 +174,7 @@ public class PanelAddMember {
             da.saveNewMember(member);
             JOptionPane.showMessageDialog(null, "Member added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             resetFormFields();
+            this.allMembersScreen.refresh();
         }
     }
 

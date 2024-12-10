@@ -13,6 +13,8 @@ public class PanelAllMembers {
     private JPanel mainPanel;
     private JPanel topPanel;
     private JPanel outerMiddle;
+    private DefaultTableModel tableModel; // To allow updating data in the table
+    private JTable memberTable; // Store reference to the table
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -40,37 +42,19 @@ public class PanelAllMembers {
     private void defineMiddlePanel() {
         outerMiddle = new JPanel(new BorderLayout(10, 10));
 
-        DataAccess da = new DataAccessFacade();
-        HashMap<String, LibraryMember> memberMap = da.readMemberMap();
-
-        if (memberMap.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No members found.", "Info", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
         // Create column names
         String[] columnNames = {"Member ID", "First Name", "Last Name", "Address"};
 
         // Create a custom table model to disable cell editing
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0) {
+        tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // Disable editing for all cells
             }
         };
 
-        // Populate table with library members
-        for (LibraryMember member : memberMap.values()) {
-            String memberId = member.getMemberId();
-            String firstName = member.getFirstName();
-            String lastName = member.getLastName();
-            String address = member.getAddress().toString(); // Assuming Address has a proper toString() method
-
-            tableModel.addRow(new Object[]{memberId, firstName, lastName, address});
-        }
-
         // Create table
-        JTable memberTable = new JTable(tableModel);
+        memberTable = new JTable(tableModel);
         memberTable.setFillsViewportHeight(true);
 
         // Set table appearance
@@ -83,5 +67,32 @@ public class PanelAllMembers {
         // Add table to scroll pane
         JScrollPane scrollPane = new JScrollPane(memberTable);
         outerMiddle.add(scrollPane, BorderLayout.CENTER);
+
+        // Initially load data
+        loadData();
+    }
+
+    // Load data from DataAccess into the table
+    private void loadData() {
+        DataAccess da = new DataAccessFacade();
+        HashMap<String, LibraryMember> memberMap = da.readMemberMap();
+
+        // Clear existing rows
+        tableModel.setRowCount(0);
+
+        // Populate table with library members
+        for (LibraryMember member : memberMap.values()) {
+            String memberId = member.getMemberId();
+            String firstName = member.getFirstName();
+            String lastName = member.getLastName();
+            String address = member.getAddress().toString(); // Assuming Address has a proper toString() method
+
+            tableModel.addRow(new Object[]{memberId, firstName, lastName, address});
+        }
+    }
+
+    // Public refresh method to reload the table data
+    public void refresh() {
+        loadData();
     }
 }

@@ -68,12 +68,13 @@ public class ManageWindow extends JFrame {
         labelWelcome.setHorizontalAlignment(SwingConstants.CENTER);
         panelWelcome.add(labelWelcome, BorderLayout.CENTER);
 
-        JPanel panelAddMember = (new PanelAddMember(da)).getMainPanel();
+        PanelAllMembers allPanelMembers = new PanelAllMembers();
+
         JPanel panelAddBook = (new PanelAddBook()).getMainPanel();
         JPanel PanelAddBookCopy = (new PanelAddBookCopy(da)).getMainPanel();
         JPanel panelCheckoutBook = (new PanelCheckoutBook()).getMainPanel();
-        JPanel panelAllMembers = (new PanelAllMembers()).getMainPanel();
-
+        JPanel panelAllMembers = (allPanelMembers).getMainPanel();
+        JPanel panelAddMember = (new PanelAddMember(da, allPanelMembers)).getMainPanel();
         cards = new JPanel(new CardLayout());
         cards.add(panelWelcome, "Welcome");
         cards.add(panelAddMember, "Add Member");
