@@ -52,7 +52,7 @@ public class ManageWindow extends JFrame {
         labelWelcome.setFont(new Font("Arial", Font.BOLD, 20));
         panelWelcome.add(labelWelcome);
 
-        JPanel panelAddMember = (new PanelAddMember()).getMainPanel();
+        JPanel panelAddMember = (new PanelAddMember(da)).getMainPanel();
         JPanel panelAddBook   = (new PanelAddBook()).getMainPanel();
         JPanel PanelAddBookCopy = (new PanelAddBookCopy(da)).getMainPanel();
         JPanel panelCheckoutBook = (new PanelCheckoutBook()).getMainPanel();

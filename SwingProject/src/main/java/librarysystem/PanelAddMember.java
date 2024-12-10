@@ -11,6 +11,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class PanelAddMember {
+    private DataAccess da;
     private JPanel mainPanel;
     private JPanel topPanel;
     private JPanel outerMiddle;
@@ -28,7 +29,8 @@ public class PanelAddMember {
         return mainPanel;
     }
 
-    public PanelAddMember() {
+    public PanelAddMember(DataAccess da) {
+        this.da = da;
         mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
 
@@ -58,7 +60,6 @@ public class PanelAddMember {
         gbc.insets = new Insets(5, 10, 5, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Member Info Fields
         JLabel[] memberLabels = {
                 new JLabel("ID:"), new JLabel("First Name:"), new JLabel("Last Name:"),
                 new JLabel("Cell:")
@@ -88,18 +89,31 @@ public class PanelAddMember {
                 new JLabel("State:"), new JLabel("Zip:")
         };
 
+        // Create JTextFields for the address
+        streetField = new JTextField("1234 Elm St", 20); // Default text for testing
+        cityField = new JTextField("United Field", 20);  // Default text for testing
+        stateField = new JTextField("Iowa", 20);         // Default text for testing
+        zipField = new JTextField("12345", 20);          // Default text for testing
+
+        // Set preferred size for address fields
+        streetField.setPreferredSize(new Dimension(300, 30)); // Wider width
+        cityField.setPreferredSize(new Dimension(300, 30));   // Wider width
+        stateField.setPreferredSize(new Dimension(300, 30));  // Wider width
+        zipField.setPreferredSize(new Dimension(300, 30));    // Wider width
+
         JTextField[] addressFields = {
-                streetField = new JTextField(20), cityField = new JTextField(20),
-                stateField = new JTextField(20), zipField = new JTextField(20)
+                streetField, cityField, stateField, zipField
         };
 
         for (int i = 0; i < addressLabels.length; i++) {
             gbc.gridx = 0;
             gbc.gridy = i;
+            gbc.weightx = 0.2;  // Assign weight to labels (optional, could leave as default)
+            gbc.fill = GridBagConstraints.HORIZONTAL;
             addressPanel.add(addressLabels[i], gbc);
 
             gbc.gridx = 1;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.weightx = 1.0;  // Allow input fields to take up more space horizontally
             addressPanel.add(addressFields[i], gbc);
         }
 
@@ -141,13 +155,12 @@ public class PanelAddMember {
         String state = stateField.getText().trim();
         String zip = zipField.getText().trim();
 
-        if (id.isEmpty() | firstName.isEmpty() || lastName.isEmpty() || cell.isEmpty() ||
+        if (id.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || cell.isEmpty() ||
                 street.isEmpty() || city.isEmpty() || state.isEmpty() || zip.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please fill out all fields", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        DataAccess da = new DataAccessFacade();
         HashMap<String, LibraryMember> memberMap = da.readMemberMap();
 
         if (memberMap.containsKey(id)) {
