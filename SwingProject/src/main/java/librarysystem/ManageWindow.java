@@ -47,35 +47,47 @@ public class ManageWindow extends JFrame {
     public void createPanels() {
         var da = new DataAccessFacade();
 
+        // Create the Welcome Panel with detailed welcome content
         JPanel panelWelcome = new JPanel();
-        JLabel labelWelcome = new JLabel("Welcome to Library System");
-        labelWelcome.setFont(new Font("Arial", Font.BOLD, 20));
-        panelWelcome.add(labelWelcome);
+        panelWelcome.setLayout(new BorderLayout());
+
+        JLabel labelWelcome = new JLabel("<html>"
+                + "<div style='text-align: center;'>"
+                + "<h1>Welcome to the Library Management System!</h1>"
+                + "<p>We are delighted to have you here! Our Library Management System is designed to streamline your experience and make managing library resources effortless and enjoyable.</p>"
+                + "<ul style='text-align: left;'>"
+                + "<li><b>📚 Browse and Manage Books</b>: Explore a vast collection of books, update information, and track their availability with ease.</li>"
+                + "<li><b>👥 Manage Library Members</b>: Add new members, update member details, and keep track of borrowing history.</li>"
+                + "<li><b>📊 View Detailed Reports</b>: Access comprehensive reports to monitor the library's operations and make informed decisions.</li>"
+                + "<li><b>💼 User-Friendly Tools</b>: Enjoy our intuitive interface that allows you to focus more on your tasks and less on complexity.</li>"
+                + "</ul>"
+                + "<p>If you need assistance or have any questions, our help section is just a click away!</p>"
+                + "<p><b>Happy Managing,</b><br>The Library Management System Team</p>"
+                + "</div>"
+                + "</html>");
+        labelWelcome.setHorizontalAlignment(SwingConstants.CENTER);
+        panelWelcome.add(labelWelcome, BorderLayout.CENTER);
 
         JPanel panelAddMember = (new PanelAddMember(da)).getMainPanel();
-        JPanel panelAddBook   = (new PanelAddBook()).getMainPanel();
+        JPanel panelAddBook = (new PanelAddBook()).getMainPanel();
         JPanel PanelAddBookCopy = (new PanelAddBookCopy(da)).getMainPanel();
         JPanel panelCheckoutBook = (new PanelCheckoutBook()).getMainPanel();
         JPanel panelAllMembers = (new PanelAllMembers()).getMainPanel();
 
-
-
         cards = new JPanel(new CardLayout());
         cards.add(panelWelcome, "Welcome");
         cards.add(panelAddMember, "Add Member");
-        //cards.add(panelAddBook, "Add Book");
         cards.add(PanelAddBookCopy, "Add Book Copy");
         cards.add(panelCheckoutBook, "Checkout Book");
         cards.add(panelAddBook, "Add Book");
         cards.add(panelAllMembers, "All Members");
 
-        //connect JList elements to CardLayout panels
+        // Connect JList elements to CardLayout panels
         linkList.addListSelectionListener(event -> {
-            String value = linkList.getSelectedValue().toString();
+            String value = linkList.getSelectedValue();
             CardLayout cl = (CardLayout) (cards.getLayout());
             cl.show(cards, value);
         });
-
     }
 
     public void createButtonBar() {
