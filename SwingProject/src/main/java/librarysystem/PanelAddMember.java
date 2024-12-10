@@ -3,130 +3,188 @@ package librarysystem;
 import business.Address;
 import business.LibraryMember;
 import dataaccess.DataAccess;
-import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.HashMap;
 
-public class PanelAddMember  {
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
+public class PanelAddMember {
+    private PanelAllMembers allMembersScreen;
+    private DataAccess da;
     private JPanel mainPanel;
     private JPanel topPanel;
     private JPanel outerMiddle;
 
-
     private JTextField IDField;
     private JTextField firstNameField;
     private JTextField lastNameField;
-
     private JTextField streetField;
     private JTextField cityField;
     private JTextField stateField;
     private JTextField zipField;
     private JTextField cellField;
 
-    public void clearData() {
-        IDField.setText("");
-        firstNameField.setText("");
-        lastNameField.setText("");
+    public JPanel getMainPanel() {
+        return mainPanel;
     }
-    public PanelAddMember() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
+
+    public PanelAddMember(DataAccess da, PanelAllMembers allMembersScreen) {
+        this.da = da;
+        this.allMembersScreen = allMembersScreen;
+        mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
+
         defineTopPanel();
         defineMiddlePanel();
+
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(outerMiddle, BorderLayout.CENTER);
     }
 
-    public void defineTopPanel() {
+    private void defineTopPanel() {
         topPanel = new JPanel();
-        JLabel AddBookLabel = new JLabel("Add Member");
-        Util.adjustLabelFont(AddBookLabel, Util.DARK_BLUE, true);
+        JLabel titleLabel = new JLabel("Add Member");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        titleLabel.setForeground(new Color(0, 102, 204));
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        topPanel.add(AddBookLabel);
+        topPanel.add(titleLabel);
     }
 
-    public void defineMiddlePanel() {
-        outerMiddle = new JPanel(new BorderLayout());
+    private void defineMiddlePanel() {
+        outerMiddle = new JPanel(new BorderLayout(10, 10));
 
-        JPanel middlePanel = new JPanel(new GridBagLayout());
+        // Member Info Panel
+        JPanel memberInfoPanel = new JPanel(new GridBagLayout());
+        memberInfoPanel.setBorder(createTitledBorder("Member Information"));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(5, 10, 5, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Labels and Text Fields
-        JLabel[] labels = {
-                new JLabel("ID"), new JLabel("First Name"), new JLabel("Last Name"),
-                new JLabel("Street"), new JLabel("City"), new JLabel("State"),
-                new JLabel("Zip"), new JLabel("Cell")
+        JLabel[] memberLabels = {
+                new JLabel("ID:"), new JLabel("First Name:"), new JLabel("Last Name:"),
+                new JLabel("Cell:")
         };
 
-        JTextField[] fields = {
-                IDField = new JTextField(15), firstNameField = new JTextField(15),
-                lastNameField = new JTextField(15), streetField = new JTextField(15),
-                cityField = new JTextField(15), stateField = new JTextField(15),
-                zipField = new JTextField(15), cellField = new JTextField(15)
+        JTextField[] memberFields = {
+                IDField = new JTextField(20), firstNameField = new JTextField(20),
+                lastNameField = new JTextField(20), cellField = new JTextField(20)
         };
 
-        for (int i = 0; i < labels.length; i++) {
-            gbc.gridx = 0;  // Label column
+        for (int i = 0; i < memberLabels.length; i++) {
+            gbc.gridx = 0;
             gbc.gridy = i;
-            middlePanel.add(labels[i], gbc);
+            memberInfoPanel.add(memberLabels[i], gbc);
 
-            gbc.gridx = 1;  // Text field column
+            gbc.gridx = 1;
             gbc.fill = GridBagConstraints.HORIZONTAL;
-            middlePanel.add(fields[i], gbc);
+            memberInfoPanel.add(memberFields[i], gbc);
         }
 
-        outerMiddle.add(middlePanel, BorderLayout.CENTER);
+        // Address Panel
+        JPanel addressPanel = new JPanel(new GridBagLayout());
+        addressPanel.setBorder(createTitledBorder("Address Information"));
 
-        // Add button at bottom
-        JButton addBookButton = new JButton("Add Member");
-        addMemberButtonListener(addBookButton);
+        JLabel[] addressLabels = {
+                new JLabel("Street:"), new JLabel("City:"),
+                new JLabel("State:"), new JLabel("Zip:")
+        };
 
-        JPanel addBookButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        addBookButtonPanel.add(addBookButton);
-        outerMiddle.add(addBookButtonPanel, BorderLayout.SOUTH);
+        // Create JTextFields for the address
+        streetField = new JTextField("1234 Elm St", 20); // Default text for testing
+        cityField = new JTextField("United Field", 20);  // Default text for testing
+        stateField = new JTextField("Iowa", 20);         // Default text for testing
+        zipField = new JTextField("12345", 20);          // Default text for testing
+
+        // Set preferred size for address fields
+        streetField.setPreferredSize(new Dimension(300, 30)); // Wider width
+        cityField.setPreferredSize(new Dimension(300, 30));   // Wider width
+        stateField.setPreferredSize(new Dimension(300, 30));  // Wider width
+        zipField.setPreferredSize(new Dimension(300, 30));    // Wider width
+
+        JTextField[] addressFields = {
+                streetField, cityField, stateField, zipField
+        };
+
+        for (int i = 0; i < addressLabels.length; i++) {
+            gbc.gridx = 0;
+            gbc.gridy = i;
+            gbc.weightx = 0.2;  // Assign weight to labels (optional, could leave as default)
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            addressPanel.add(addressLabels[i], gbc);
+
+            gbc.gridx = 1;
+            gbc.weightx = 1.0;  // Allow input fields to take up more space horizontally
+            addressPanel.add(addressFields[i], gbc);
+        }
+
+        // Combine Member Info and Address Panels
+        JPanel formPanel = new JPanel(new BorderLayout(10, 10));
+        formPanel.add(memberInfoPanel, BorderLayout.NORTH);
+        formPanel.add(addressPanel, BorderLayout.CENTER);
+
+        outerMiddle.add(formPanel, BorderLayout.CENTER);
+
+        // Add Button
+        JButton addMemberButton = new JButton("Add Member");
+        addMemberButton.setBackground(new Color(0, 153, 76));
+        addMemberButton.setForeground(Color.WHITE);
+        addMemberButton.setFocusPainted(false);
+        addMemberButton.addActionListener(e -> addMemberAction());
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(addMemberButton);
+        outerMiddle.add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void addMemberButtonListener(JButton butn) {
-        butn.addActionListener(evt -> {
-            if (IDField.getText()==null || IDField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid ID");
-                return;
-            }
+    private Border createTitledBorder(String title) {
+        TitledBorder border = BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(new Color(0, 102, 204), 1, true),
+                title, TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14),
+                new Color(0, 102, 204)
+        );
+        return border;
+    }
 
-            DataAccess da = new DataAccessFacade();
-            HashMap<String, LibraryMember> map = da.readMemberMap();
-            if (map.containsKey(IDField.getText())){
-                JOptionPane.showMessageDialog(null, "Member already exists");
-            }
-            else{
-                Address address = new Address(streetField.getText(), cityField.getText(), stateField.getText(), zipField.getText());
-                LibraryMember libraryMember = new LibraryMember(
-                        IDField.getText(), firstNameField.getText(), lastNameField.getText(), cellField.getText(), address);
-                da.saveNewMember(libraryMember);
-                JOptionPane.showMessageDialog(null,"successfully added");
-                resetFormFields();
-            }
+    private void addMemberAction() {
+        String id = IDField.getText().trim();
+        String firstName = firstNameField.getText().trim();
+        String lastName = lastNameField.getText().trim();
+        String cell = cellField.getText().trim();
+        String street = streetField.getText().trim();
+        String city = cityField.getText().trim();
+        String state = stateField.getText().trim();
+        String zip = zipField.getText().trim();
 
+        if (id.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || cell.isEmpty() ||
+                street.isEmpty() || city.isEmpty() || state.isEmpty() || zip.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill out all fields", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        });
+        HashMap<String, LibraryMember> memberMap = da.readMemberMap();
+
+        if (memberMap.containsKey(id)) {
+            JOptionPane.showMessageDialog(null, "Member already exists", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Address address = new Address(street, city, state, zip);
+            LibraryMember member = new LibraryMember(id, firstName, lastName, cell, address);
+            da.saveNewMember(member);
+            JOptionPane.showMessageDialog(null, "Member added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            resetFormFields();
+            this.allMembersScreen.refresh();
+        }
     }
 
     private void resetFormFields() {
         JTextField[] fields = {
-                IDField, firstNameField, lastNameField, streetField,
-                cityField, stateField, zipField, cellField
+                IDField, firstNameField, lastNameField, cellField,
+                streetField, cityField, stateField, zipField
         };
-
         for (JTextField field : fields) {
             field.setText("");
         }
     }
-
 }

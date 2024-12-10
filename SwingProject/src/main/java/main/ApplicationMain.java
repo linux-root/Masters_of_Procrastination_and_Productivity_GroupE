@@ -13,7 +13,7 @@ public class ApplicationMain {
         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         EventQueue.invokeLater(() ->
 	         {
-	            LibrarySystem.INSTANCE.setTitle("Sample Library Application");
+	            LibrarySystem.INSTANCE.setTitle("MIU Library Company");
 	            LibrarySystem.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 LibrarySystem.INSTANCE.init();
                 centerFrameOnDesktop(LibrarySystem.INSTANCE);
