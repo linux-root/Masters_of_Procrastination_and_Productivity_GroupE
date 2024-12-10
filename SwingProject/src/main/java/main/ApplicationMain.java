@@ -9,8 +9,8 @@ import java.awt.*;
 
 public class ApplicationMain {
 
-	public static void main(String[] args) throws UnsupportedLookAndFeelException {
-       	UIManager.setLookAndFeel(new FlatIntelliJLaf());
+	public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         EventQueue.invokeLater(() ->
 	         {
 	            LibrarySystem.INSTANCE.setTitle("Sample Library Application");
