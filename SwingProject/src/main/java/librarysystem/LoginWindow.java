@@ -1,231 +1,128 @@
 package librarysystem;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.util.HashMap;
-
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JOptionPane;
-
-import business.ControllerInterface;
-
-import business.SystemController;
+import javax.swing.*;
 import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
 
-import static librarysystem.Util.centerFrameOnDesktop;
-
-
 public class LoginWindow extends JFrame implements LibWindow {
-    public static final LoginWindow INSTANCE = new LoginWindow();
+	public static final LoginWindow INSTANCE = new LoginWindow();
 
-	public static JFrame manageFrame;//zh
-	
 	private boolean isInitialized = false;
-	
-	private JPanel mainPanel;
-	private JPanel upperHalf;
-	private JPanel middleHalf;
-	private JPanel lowerHalf;
-	private JPanel container;
-	
-	private JPanel topPanel;
-	private JPanel middlePanel;
-	private JPanel lowerPanel;
-	private JPanel leftTextPanel;
-	private JPanel rightTextPanel;
-	
-	private JTextField username;
-	private JTextField password;
-	private JLabel label;
-	private JButton loginButton;
-	private JButton logoutButton;
-	
-	
-	
-	
+	private JTextField usernameField;
+	private JPasswordField passwordField;
+	private JLabel messageLabel;
+
+	private LoginWindow() {}
+
 	public boolean isInitialized() {
 		return isInitialized;
 	}
+
 	public void isInitialized(boolean val) {
 		isInitialized = val;
 	}
-	private JTextField messageBar = new JTextField();
+
 	public void clear() {
-		messageBar.setText("");
+		messageLabel.setText("");
 	}
-	
-	/* This class is a singleton */
-    private LoginWindow () {}
-    
-    public void init() {
+
+	public void init() {
 		if (isInitialized) return;
 
-		mainPanel = new JPanel();
-		defineUpperHalf();
-		defineMiddleHalf();
-		defineLowerHalf();
-		BorderLayout bl = new BorderLayout();
-		bl.setVgap(30);
-		mainPanel.setLayout(bl);
+		setTitle("Library Login");
+		setLayout(new BorderLayout());
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		mainPanel.add(upperHalf, BorderLayout.NORTH);
-		mainPanel.add(middleHalf, BorderLayout.CENTER);
-		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
-		getContentPane().add(mainPanel);
-		isInitialized(true);
+		// Header Panel
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBackground(new Color(60, 60, 200));
+		headerPanel.setPreferredSize(new Dimension(100, 60));
+		JLabel headerLabel = new JLabel("Library Login");
+		headerLabel.setForeground(Color.WHITE);
+		headerLabel.setFont(new Font("Arial", Font.BOLD, 24));
+		headerPanel.add(headerLabel);
+
+		// Form Panel
+		JPanel formPanel = new JPanel(new GridBagLayout());
+		formPanel.setBackground(Color.WHITE);
+		formPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(10, 10, 10, 10);
+
+		JLabel usernameLabel = new JLabel("Username:");
+		usernameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		gbc.gridx = 0; gbc.gridy = 0;
+		formPanel.add(usernameLabel, gbc);
+
+		usernameField = new JTextField(15);
+		usernameField.setMinimumSize(usernameField.getPreferredSize());
+		gbc.gridx = 1;
+		formPanel.add(usernameField, gbc);
+
+		JLabel passwordLabel = new JLabel("Password:");
+		passwordLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		gbc.gridx = 0; gbc.gridy = 1;
+		formPanel.add(passwordLabel, gbc);
+
+		passwordField = new JPasswordField(15);
+		passwordField.setMinimumSize(passwordField.getPreferredSize());
+		gbc.gridx = 1;
+		formPanel.add(passwordField, gbc);
+
+		messageLabel = new JLabel("");
+		messageLabel.setForeground(Color.RED);
+		gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;
+		formPanel.add(messageLabel, gbc);
+
+		JButton loginButton = new JButton("Login");
+		loginButton.setBackground(new Color(60, 120, 200));
+		loginButton.setForeground(Color.WHITE);
+		loginButton.setFocusPainted(false);
+		loginButton.setPreferredSize(new Dimension(100, 30));
+		addLoginButtonListener(loginButton);
+
+		gbc.gridx = 1; gbc.gridy = 3;
+		formPanel.add(loginButton, gbc);
+
+		// Add components to frame
+		add(headerPanel, BorderLayout.NORTH);
+		add(formPanel, BorderLayout.CENTER);
 		pack();
-		//setSize(660, 500);
-    	
-    }
-    	private void defineUpperHalf() {
-    		
-    		upperHalf = new JPanel();
-    		upperHalf.setLayout(new BorderLayout());
-    		defineTopPanel();
-    		defineMiddlePanel();
-    		defineLowerPanel();
-    		upperHalf.add(topPanel, BorderLayout.NORTH);
-    		upperHalf.add(middlePanel, BorderLayout.CENTER);
-    		upperHalf.add(lowerPanel, BorderLayout.SOUTH);
-    		
-    	}
-    	private void defineMiddleHalf() {
-    		middleHalf = new JPanel();
-    		middleHalf.setLayout(new BorderLayout());
-    		JSeparator s = new JSeparator();
-    		s.setOrientation(SwingConstants.HORIZONTAL);
-    		//middleHalf.add(Box.createRigidArea(new Dimension(0,50)));
-    		middleHalf.add(s, BorderLayout.SOUTH);
-    		
-    	}
-    	private void defineLowerHalf() {
+		setLocationRelativeTo(null);
+		setVisible(true);
+		isInitialized = true;
+	}
 
-    		lowerHalf = new JPanel();
-    		lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
-    		
-    		JButton backButton = new JButton("<= Back to Main");
-    		addBackButtonListener(backButton);
-    		lowerHalf.add(backButton);
-    		
-    	}
+	private void addLoginButtonListener(JButton loginButton) {
+		loginButton.addActionListener(evt -> {
+			String username = usernameField.getText();
+			String password = new String(passwordField.getPassword());
 
-    	private void defineTopPanel() {
-    		topPanel = new JPanel();
-    		JPanel intPanel = new JPanel(new BorderLayout());
-    		intPanel.add(Box.createRigidArea(new Dimension(0,20)), BorderLayout.NORTH);
-    		JLabel loginLabel = new JLabel("Login");
-    		Util.adjustLabelFont(loginLabel, Color.BLUE.darker(), true);
-    		intPanel.add(loginLabel, BorderLayout.CENTER);
-    		topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    		topPanel.add(intPanel);
-    		
-    	}
-    	private void defineMiddlePanel() {
-    		middlePanel=new JPanel();
-    		middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    		defineLeftTextPanel();
-    		defineRightTextPanel();
-    		middlePanel.add(leftTextPanel);
-    		middlePanel.add(rightTextPanel);
-    	}
-    	private void defineLowerPanel() {
-    		lowerPanel = new JPanel();
-    		loginButton = new JButton("Login");
-    		addLoginButtonListener(loginButton);
-    		lowerPanel.add(loginButton);
-    	}
+			DataAccess da = new DataAccessFacade();
+			HashMap<String, User> map = da.readUserMap();
 
-    	private void defineLeftTextPanel() {
-    		
-    		JPanel topText = new JPanel();
-    		JPanel bottomText = new JPanel();
-    		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-    		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));		
-    		
-    		username = new JTextField(10);
-    		label = new JLabel("Username");
-    		label.setFont(Util.makeSmallFont(label.getFont()));
-    		topText.add(username);
-    		bottomText.add(label);
-    		
-    		leftTextPanel = new JPanel();
-    		leftTextPanel.setLayout(new BorderLayout());
-    		leftTextPanel.add(topText,BorderLayout.NORTH);
-    		leftTextPanel.add(bottomText,BorderLayout.CENTER);
-    	}
-    	private void defineRightTextPanel() {
-    		
-    		JPanel topText = new JPanel();
-    		JPanel bottomText = new JPanel();
-    		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-    		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));		
-    		
-    		password = new JPasswordField(10);
-    		label = new JLabel("Password");
-    		label.setFont(Util.makeSmallFont(label.getFont()));
-    		topText.add(password);
-    		bottomText.add(label);
-    		
-    		rightTextPanel = new JPanel();
-    		rightTextPanel.setLayout(new BorderLayout());
-    		rightTextPanel.add(topText,BorderLayout.NORTH);
-    		rightTextPanel.add(bottomText,BorderLayout.CENTER);
-    	}
-    	
-    	private void addBackButtonListener(JButton butn) {
-    		butn.addActionListener(evt -> {
-    			LibrarySystem.hideAllWindows();
-    			LibrarySystem.INSTANCE.setVisible(true);
-    		});
-    	}
-    	
-    	private void addLoginButtonListener(JButton butn) {
-    		butn.addActionListener(evt -> {
-				//zh
-				System.out.println("username:" + username.getText());
-				System.out.println("password:" + password.getText());
+			if (!map.containsKey(username)) {
+				messageLabel.setText("User does not exist.");
+			} else if (!map.get(username).getPassword().equals(password)) {
+				messageLabel.setText("Invalid username or password.");
+			} else {
+				messageLabel.setText("");
+				User user = map.get(username);
+				Auth auth = user.getAuthorization();
 
-				DataAccess da = new DataAccessFacade();
-				HashMap<String, User> map = da.readUserMap();
-				if(!map.containsKey(username.getText())) {
-					JOptionPane.showMessageDialog(this,"Failed to Login! The user does not exist");
-				}
-				else if (!map.get(username.getText()).getPassword().equals(password.getText())) {//encrypt...
-					JOptionPane.showMessageDialog(this,"Failed to Login! Username or password is incorrect");
-				}
-				else{
-					//JOptionPane.showMessageDialog(this,"Successful Login");
-					User user = map.get(username.getText());
-					Auth auth = user.getAuthorization();
-					System.out.println(auth);
-
-					LibrarySystem.hideAllWindows();
-
-					manageFrame = new ManageWindow(auth);
-					manageFrame.setTitle("Library Management System");
-					manageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					Util.centerFrameOnDesktop(manageFrame);
-					manageFrame.setVisible(true);
-				}
-
-    			//JOptionPane.showMessageDialog(this,"Successful Login");
-    				
-    		});
-    	}
-	
-        
-    
+				LibrarySystem.hideAllWindows();
+				JFrame manageFrame = new ManageWindow(auth);
+				manageFrame.setTitle("Library Management System");
+				manageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				Util.centerFrameOnDesktop(manageFrame);
+				manageFrame.setVisible(true);
+			}
+		});
+	}
 }
