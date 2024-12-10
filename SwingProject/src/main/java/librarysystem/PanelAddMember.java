@@ -108,7 +108,7 @@ public class PanelAddMember  {
             else{
                 Address address = new Address(streetField.getText(), cityField.getText(), stateField.getText(), zipField.getText());
                 LibraryMember libraryMember = new LibraryMember(
-                        IDField.getText(), firstNameField.getText(), lastNameField.getName(), cellField.getText(), address);
+                        IDField.getText(), firstNameField.getText(), lastNameField.getText(), cellField.getText(), address);
                 da.saveNewMember(libraryMember);
                 JOptionPane.showMessageDialog(null,"successfully added");
                 resetFormFields();

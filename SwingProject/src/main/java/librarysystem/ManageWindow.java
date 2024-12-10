@@ -16,7 +16,7 @@ public class ManageWindow extends JFrame {
     JPanel buttonBar;
 
     public ManageWindow(Auth auth) {
-        setSize(660, 500);
+        setSize(860, 500);
 
         String[] items;
         //auth
@@ -33,7 +33,7 @@ public class ManageWindow extends JFrame {
         createButtonBar();
         // set up split panes
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, linkList, cards);
-        splitPane.setDividerLocation(100);
+        splitPane.setDividerLocation(200);
 
         JSplitPane outerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPane, buttonBar);
         outerPane.setDividerLocation(400);

@@ -52,7 +52,7 @@ public class PanelAllMembers  {
 
     public void defineTopPanel() {
         topPanel = new JPanel();
-        JLabel AddBookLabel = new JLabel("All Memberss");
+        JLabel AddBookLabel = new JLabel("All Members");
         Util.adjustLabelFont(AddBookLabel, Util.DARK_BLUE, true);
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(AddBookLabel);
@@ -81,7 +81,9 @@ public class PanelAllMembers  {
         // Create a list model
         DefaultListModel<String> listModel = new DefaultListModel<>();
         for (LibraryMember member : memberMap.values()) {
-            listModel.addElement(member.getMemberId() + " - " + member.getFirstName() + " " + member.getLastName());
+            if(!member.getFirstName().isEmpty()) {
+                listModel.addElement(member.getMemberId() + " - " + member.getFirstName());
+            }
         }
         // Display the list in a dialog
         JList<String> memberList = new JList<>(listModel);

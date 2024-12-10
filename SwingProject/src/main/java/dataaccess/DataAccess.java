@@ -16,4 +16,5 @@ public interface DataAccess {
 	public void saveNewBook(Book book);
 	public void saveNewBookCopy(BookCopy bookCopy);
 	public void saveCheckoutRecord(CheckoutRecord record);
+	public  HashMap<String,CheckoutRecord> readCheckoutRecordsMap();
 }
