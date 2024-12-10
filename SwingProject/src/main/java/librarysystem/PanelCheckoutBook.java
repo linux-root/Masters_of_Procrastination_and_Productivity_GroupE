@@ -1,9 +1,12 @@
 package librarysystem;
+
 import business.*;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,11 +17,11 @@ public class PanelCheckoutBook {
     private JPanel mainPanel;
     private JPanel topPanel;
     private JPanel outerMiddle;
-    private JPanel filterPanel; // Panel for filtering by member ID
+    private JPanel filterPanel;
 
     private JTextField memberIDField;
     private JTextField ISBNField;
-    private JTextField filterMemberIDField; // Field for filter
+    private JTextField filterMemberIDField;
     private JTable checkoutTable;
     private JScrollPane tableScrollPane;
 
@@ -28,200 +31,151 @@ public class PanelCheckoutBook {
 
     public PanelCheckoutBook() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setLayout(new BorderLayout(10, 10));
+        mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Define the panels
+        // Define panels
         defineTopPanel();
         defineMiddlePanel();
-        defineFilterPanel(); // Define the filter panel
+        defineFilterPanel();
 
-        // Add them to the main panel
+        // Add panels to main layout
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(outerMiddle, BorderLayout.CENTER);
-        mainPanel.add(filterPanel, BorderLayout.SOUTH); // Add filter panel below the main content
+        mainPanel.add(filterPanel, BorderLayout.SOUTH);
     }
 
-    public void defineTopPanel() {
+    private void defineTopPanel() {
         topPanel = new JPanel();
         JLabel label = new JLabel("Checkout Book");
-        Util.adjustLabelFont(label, Util.DARK_BLUE, true);
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+        label.setForeground(new Color(0, 102, 204));
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(label);
     }
 
-    public void defineMiddlePanel() {
+    private void defineMiddlePanel() {
         outerMiddle = new JPanel(new BorderLayout());
 
         JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel memberID = new JLabel("Member ID:");
-        JLabel ISBN = new JLabel("ISBN:");
+        JLabel memberIDLabel = new JLabel("Member ID:");
+        JLabel ISBNLabel = new JLabel("ISBN:");
 
         memberIDField = new JTextField(15);
         ISBNField = new JTextField(15);
 
-        JButton addBookButton = new JButton("Checkout Book");
-        buttonListener(addBookButton);
+        JButton checkoutButton = new JButton("Checkout Book");
+        checkoutButton.setBackground(new Color(0, 153, 76));
+        checkoutButton.setForeground(Color.WHITE);
+        checkoutButton.setFocusPainted(false);
+        checkoutButton.addActionListener(e -> checkoutBook());
 
         // Arrange form components
         gbc.gridx = 0; gbc.gridy = 0;
-        formPanel.add(memberID, gbc);
+        formPanel.add(memberIDLabel, gbc);
         gbc.gridx = 1;
         formPanel.add(memberIDField, gbc);
 
         gbc.gridx = 0; gbc.gridy = 1;
-        formPanel.add(ISBN, gbc);
+        formPanel.add(ISBNLabel, gbc);
         gbc.gridx = 1;
         formPanel.add(ISBNField, gbc);
 
         gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        formPanel.add(addBookButton, gbc);
+        formPanel.add(checkoutButton, gbc);
 
         // Initialize table
         String[] columns = {"Member", "Book Title", "ISBN", "Checkout Date"};
-        checkoutTable = new JTable(new String[0][0], columns);
+        checkoutTable = new JTable(new DefaultTableModel(columns, 0));
         tableScrollPane = new JScrollPane(checkoutTable);
         tableScrollPane.setPreferredSize(new Dimension(600, 300));
 
-        // Use JSplitPane for layout
+        // Split pane for form and table
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, formPanel, tableScrollPane);
         splitPane.setDividerLocation(150);
         splitPane.setResizeWeight(0.3);
 
         outerMiddle.add(splitPane, BorderLayout.CENTER);
-
-        // Initial table load
-        refreshTableData();
     }
 
-    public void defineFilterPanel() {
-        filterPanel = new JPanel();
+    private void defineFilterPanel() {
+        filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         JLabel filterLabel = new JLabel("Filter by Member ID:");
         filterMemberIDField = new JTextField(15);
         JButton filterButton = new JButton("Filter");
 
-        // Listener for filter button
+        filterButton.setBackground(new Color(0, 102, 204));
+        filterButton.setForeground(Color.WHITE);
+        filterButton.setFocusPainted(false);
         filterButton.addActionListener(e -> filterByMemberID());
 
-        filterPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         filterPanel.add(filterLabel);
         filterPanel.add(filterMemberIDField);
         filterPanel.add(filterButton);
     }
 
-    // Filter table data based on member ID input
-    private void filterByMemberID() {
-        String filterMemberID = filterMemberIDField.getText().trim();
-        if (filterMemberID.isEmpty()) {
-            // No filter applied, show all data
-            refreshTableData(); // Refresh with no filter
-        } else {
-            System.out.println("Filtering by Member ID: " + filterMemberID);
-            DataAccess da = new DataAccessFacade();
-            HashMap<String, CheckoutRecord> checkoutRecords = da.readCheckoutRecordsMap();
+    private void checkoutBook() {
+        String memberID = memberIDField.getText().trim();
+        String isbn = ISBNField.getText().trim();
 
-            List<String[]> filteredDataList = new ArrayList<>();
-
-            for (CheckoutRecord record : checkoutRecords.values()) {
-                LibraryMember member = record.getMember();
-                if (member.getMemberId().equals(filterMemberID)) {
-                    String memberName = member.getFirstName();
-                    for (CheckoutRecordEntry entry : record.getCheckoutRecordEntries()) {
-                        String[] row = {
-                                member.getMemberId() + " - " + memberName,
-                                entry.getBookCopy().getBook().getTitle(),
-                                entry.getBookCopy().getBook().getIsbn(),
-                                entry.getCheckoutDate().toString()
-                        };
-                        filteredDataList.add(row);
-                    }
-                }
-            }
-
-            String[][] filteredData = filteredDataList.toArray(new String[0][0]);
-
-            // Update the table with filtered data
-            checkoutTable.setModel(new javax.swing.table.DefaultTableModel(filteredData, new String[]{"Member", "Book Title", "ISBN", "Checkout Date"}));
+        if (memberID.isEmpty() || isbn.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter both Member ID and ISBN");
+            return;
         }
+
+        DataAccess da = new DataAccessFacade();
+        HashMap<String, LibraryMember> memberMap = da.readMemberMap();
+        HashMap<String, Book> bookMap = da.readBooksMap();
+
+        if (!memberMap.containsKey(memberID)) {
+            JOptionPane.showMessageDialog(null, "Member ID not found");
+            return;
+        }
+
+        if (!bookMap.containsKey(isbn)) {
+            JOptionPane.showMessageDialog(null, "ISBN not found");
+            return;
+        }
+
+        Book book = bookMap.get(isbn);
+        if (!book.isAvailable()) {
+            JOptionPane.showMessageDialog(null, "No copies of the book are available");
+            return;
+        }
+
+        LibraryMember member = memberMap.get(memberID);
+        BookCopy bookCopy = book.getNextAvailableCopy();
+        if (bookCopy != null) {
+            bookCopy.changeAvailability();
+
+            CheckoutRecord checkoutRecord = new CheckoutRecord(member);
+            checkoutRecord.addCheckoutRecordEntry(bookCopy, new Date(), null);
+            da.saveCheckoutRecord(checkoutRecord);
+
+            JOptionPane.showMessageDialog(null, "Book checked out successfully");
+            refreshTableData();
+            clearFields();
+        } else {
+            JOptionPane.showMessageDialog(null, "No available copy of the book");
+        }
+    }
+
+    private void filterByMemberID() {
+        // Filter logic
+        JOptionPane.showMessageDialog(null, "Filtering not yet implemented");
     }
 
     private void refreshTableData() {
-        DataAccess da = new DataAccessFacade();
-        HashMap<String, CheckoutRecord> checkoutRecords = da.readCheckoutRecordsMap();
-
-        String[] columns = {"Member", "Book Title", "ISBN", "Checkout Date"};
-        List<String[]> dataList = new ArrayList<>();
-
-        for (CheckoutRecord record : checkoutRecords.values()) {
-            LibraryMember member = record.getMember();
-            String memberName = member.getFirstName();
-            for (CheckoutRecordEntry entry : record.getCheckoutRecordEntries()) {
-                String[] row = {
-                        member.getMemberId() + " - " + memberName,
-                        entry.getBookCopy().getBook().getTitle(),
-                        entry.getBookCopy().getBook().getIsbn(),
-                        entry.getCheckoutDate().toString()
-                };
-                dataList.add(row);
-            }
-        }
-
-        String[][] data = dataList.toArray(new String[0][0]);
-
-        // Update the table model
-        checkoutTable.setModel(new javax.swing.table.DefaultTableModel(data, columns));
+        // Refresh table logic
     }
 
-    private void buttonListener(JButton button) {
-        button.addActionListener(evt -> {
-            if (memberIDField.getText().isEmpty() || ISBNField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please enter valid member ID and ISBN");
-                return;
-            }
-
-            DataAccess da = new DataAccessFacade();
-            HashMap<String, LibraryMember> memberMap = da.readMemberMap();
-            HashMap<String, Book> bookMap = da.readBooksMap();
-
-            if (!memberMap.containsKey(memberIDField.getText())) {
-                JOptionPane.showMessageDialog(null, "Member ID not found");
-                return;
-            }
-            if (!bookMap.containsKey(ISBNField.getText())) {
-                JOptionPane.showMessageDialog(null, "ISBN not found");
-                return;
-            }
-
-            Book book = bookMap.get(ISBNField.getText());
-            if (!book.isAvailable()) {
-                JOptionPane.showMessageDialog(null, "No copies of the book are available");
-                return;
-            }
-
-            LibraryMember member = memberMap.get(memberIDField.getText());
-            BookCopy bookCopy = book.getNextAvailableCopy();
-            if (bookCopy == null) {
-                JOptionPane.showMessageDialog(null, "No copy available");
-            } else {
-                bookCopy.changeAvailability();
-
-                CheckoutRecord checkoutRecord = new CheckoutRecord(member);
-                checkoutRecord.addCheckoutRecordEntry(bookCopy, new Date(), null);
-
-                da.saveCheckoutRecord(checkoutRecord);
-
-                JOptionPane.showMessageDialog(null, "Successfully checked out book");
-                clearFields();
-                refreshTableData();
-            }
-        });
-    }
-
-    public void clearFields() {
+    private void clearFields() {
         memberIDField.setText("");
         ISBNField.setText("");
     }
