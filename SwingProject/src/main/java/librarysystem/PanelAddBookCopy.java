@@ -6,6 +6,7 @@ import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class PanelAddBookCopy {
     private JPanel mainPanel;
@@ -66,27 +67,28 @@ public class PanelAddBookCopy {
         });
 
         // Add action listener to the Add Copy button
-        addCopyButton.addActionListener(e -> {
-            Book selectedBook = bookList.getSelectedValue();
-            int copyCount = (int) copyCountSpinner.getValue();
-            if (selectedBook == null) {
-                JOptionPane.showMessageDialog(null, "Please select a book first.");
-            } else {
-               selectedBook.addCopy(copyCount);
-               dataAccess.saveNewBook(selectedBook);
-               JOptionPane.showMessageDialog(null,
-                       "Added " + copyCount + " copies to " + selectedBook.getTitle() + ".");
-               copyCountSpinner.setValue(1); // Reset to default value
+        addCopyButton.addActionListener(e -> handleAddCopyAction(selectedBookLabel, copyCountSpinner));
+    }
 
-               // Refresh the JList model and keep the selected book updated
-               Book[] updatedBooks = dataAccess.readBooksMap().values().toArray(new Book[0]);
-               bookList.setListData(updatedBooks);
+    private void handleAddCopyAction(JLabel selectedBookLabel, JSpinner copyCountSpinner) {
+        Book selectedBook = bookList.getSelectedValue();
+        int copyCount = (int) copyCountSpinner.getValue();
+        if (selectedBook == null) {
+            JOptionPane.showMessageDialog(null, "Please select a book first.");
+        } else {
+            selectedBook.addCopy(copyCount);
+            dataAccess.saveNewBook(selectedBook);
+            JOptionPane.showMessageDialog(null,
+                    "Added " + copyCount + " copies to " + selectedBook.getTitle() + ".");
+            copyCountSpinner.setValue(1); // Reset to default value
 
-               // Update the selected book label
-               bookList.setSelectedValue(selectedBook, true); // Re-select the updated book
-               selectedBookLabel.setText("Selected Book: " + selectedBook.getTitle());
-            }
-        });
+            // Refresh the JList model and keep the selected book updated
+            refreshBookListPanel();
+
+            // Update the selected book label
+            bookList.setSelectedValue(selectedBook, true); // Re-select the updated book
+            selectedBookLabel.setText("Selected Book: " + selectedBook.getTitle());
+        }
     }
 
     private JPanel createBookListPanel() {
