@@ -101,6 +101,7 @@ public class ManageWindow extends JFrame {
     private void addLogoutButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
             LibrarySystem.hideAllWindows();
+            LoginWindow.manageFrame.setVisible(false);
             LibrarySystem.INSTANCE.setVisible(true);
         });
     }
