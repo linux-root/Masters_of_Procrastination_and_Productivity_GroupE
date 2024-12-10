@@ -118,7 +118,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 
 				LibrarySystem.hideAllWindows();
 				JFrame manageFrame = new ManageWindow(auth);
-				manageFrame.setTitle("Library Management System");
+				manageFrame.setTitle("MIU Library Company");
 				manageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				Util.centerFrameOnDesktop(manageFrame);
 				manageFrame.setVisible(true);

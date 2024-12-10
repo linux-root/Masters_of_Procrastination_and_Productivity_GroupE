@@ -19,8 +19,21 @@ final public class LibraryMember extends Person implements Serializable {
 		return memberId;
 	}
 
-	
-	
+	@Override
+	public String getFirstName() {
+		return super.getFirstName();
+	}
+
+	@Override
+	public String getLastName() {
+		return super.getLastName();
+	}
+
+	@Override
+	public Address getAddress() {
+		return super.getAddress();
+	}
+
 	@Override
 	public String toString() {
 		return "Member Info: " + "ID: " + memberId + ", name: " + getFirstName() + " " + getLastName() + 
