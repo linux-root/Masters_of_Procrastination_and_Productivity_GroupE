@@ -22,11 +22,18 @@ public class TestData {
 		td.bookData();
 		td.libraryMemberData();
 		td.userData();
+		td.authorData();
 		DataAccess da = new DataAccessFacade();
 		System.out.println(da.readBooksMap());
 		System.out.println(da.readMemberMap());
 		System.out.println(da.readUserMap());
+		System.out.println(da.readAuthors());
 	}
+
+     void authorData(){
+   	   DataAccessFacade.loadAuthorMap(allAuthors);
+	}
+
 	///create books
 	public void bookData() {
 		allBooks.get(0).addCopy();
