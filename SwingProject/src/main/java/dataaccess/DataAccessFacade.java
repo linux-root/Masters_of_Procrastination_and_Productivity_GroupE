@@ -18,7 +18,7 @@ import librarysystem.Util;
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS, BOOKCOPIES, BOOKCHECKOUTS;
+		BOOKS, MEMBERS, USERS, BOOKCOPIES, BOOKCHECKOUTS, AUTHORS;
 	}
 	
 	public static final String OUTPUT_DIR = Util.getFilePath("");
