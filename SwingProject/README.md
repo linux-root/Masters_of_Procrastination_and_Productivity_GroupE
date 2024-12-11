@@ -1,1 +1,1 @@
-## 1. Run project
+## 1. How  to run project
