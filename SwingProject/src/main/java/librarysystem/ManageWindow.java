@@ -69,9 +69,9 @@ public class ManageWindow extends JFrame {
         panelWelcome.add(labelWelcome, BorderLayout.CENTER);
 
         PanelAllMembers allPanelMembers = new PanelAllMembers();
-
-        JPanel panelAddBook = (new PanelAddBook()).getMainPanel();
-        JPanel PanelAddBookCopy = (new PanelAddBookCopy(da)).getMainPanel();
+        PanelAddBookCopy panelAddBookCopy =  new PanelAddBookCopy(da);
+        JPanel PanelAddBookCopy = (panelAddBookCopy).getMainPanel();
+        JPanel panelAddBook = (new PanelAddBook(da, panelAddBookCopy)).getMainPanel();
         JPanel panelCheckoutBook = (new PanelCheckoutBook()).getMainPanel();
         JPanel panelAllMembers = (allPanelMembers).getMainPanel();
         JPanel panelAddMember = (new PanelAddMember(da, allPanelMembers)).getMainPanel();

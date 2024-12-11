@@ -13,6 +13,12 @@ final public class Author extends Person implements Serializable {
 		this.bio = bio;
 	}
 
+
+	@Override
+	public String toString() {
+		return this.getFirstName() + " " + this.getLastName();
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {return false;}

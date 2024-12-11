@@ -6,7 +6,6 @@ import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class PanelAddBookCopy {
     private JPanel mainPanel;
@@ -106,7 +105,7 @@ public class PanelAddBookCopy {
         return panel;
     }
 
-    private void refreshBookListPanel() {
+    public void refreshBookListPanel() {
         // Remove the old book list panel
         mainPanel.remove(bookListPanel);
 
