@@ -1,6 +1,5 @@
 package main;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import librarysystem.LibrarySystem;
 
 import javax.swing.*;
