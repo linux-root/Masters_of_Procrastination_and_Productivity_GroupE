@@ -88,8 +88,19 @@ public class DataAccessFacade implements DataAccess {
 		return (HashMap<String, LibraryMember>) readFromStorage(
 				StorageType.MEMBERS);
 	}
-	
-	
+
+	@Override
+	public HashMap<String, Author> readAuthors() {
+		return (HashMap<String, Author>) readFromStorage(
+				StorageType.AUTHORS);
+	}
+
+	@Override
+	public void saveNewAuthor(Author author) {
+
+	}
+
+
 	@SuppressWarnings("unchecked")
 	public HashMap<String, User> readUserMap() {
 		//Returns a Map with name/value pairs being
@@ -100,8 +111,13 @@ public class DataAccessFacade implements DataAccess {
 	
 	/////load methods - these place test data into the storage area
 	///// - used just once at startup  
-	
-		
+
+	static void loadAuthorMap(List<Author> authors) {
+		HashMap<String, Author> authorsMap = new HashMap<String, Author>();
+		authors.forEach(author -> authorsMap.put(String.valueOf(author.hashCode()), author));
+		saveToStorage(StorageType.AUTHORS, authorsMap);
+	}
+
 	static void loadBookMap(List<Book> bookList) {
 		HashMap<String, Book> books = new HashMap<String, Book>();
 		bookList.forEach(book -> books.put(book.getIsbn(), book));

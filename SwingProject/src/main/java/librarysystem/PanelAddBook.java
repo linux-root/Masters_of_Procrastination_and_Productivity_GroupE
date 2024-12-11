@@ -1,6 +1,5 @@
 package librarysystem;
 
-import business.Address;
 import business.Author;
 import business.Book;
 import dataaccess.DataAccess;
@@ -20,22 +19,19 @@ public class PanelAddBook {
     private JTextField ISBNField;
     private JTextField titleField;
     private JTextField maxCheckoutLengthField;
-
-    private JTextField authorFirstNameField;
-    private JTextField authorLastNameField;
-    private JTextField authorStreetField;
-    private JTextField authorCityField;
-    private JTextField authorStateField;
-    private JTextField authorZipField;
-    private JTextField authorCellField;
-
-    private DefaultListModel<Author> authorListModel;
+    private DataAccess da;
+    private PanelAddBookCopy panelAddBookCopy;
+    private DefaultListModel<Author> availableAuthorsModel;
+    private DefaultListModel<Author> selectedAuthorsModel;
+    private JLabel selectedAuthorsLabel;
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
-    public PanelAddBook() {
+    public PanelAddBook(DataAccess da, PanelAddBookCopy panelAddBookCopy) {
+        this.da = da;
+        this.panelAddBookCopy = panelAddBookCopy;
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         defineTopPanel();
@@ -65,40 +61,55 @@ public class PanelAddBook {
         addFormField(outerMiddle, "Title", titleField = new JTextField(), gbc, fieldHeight);
         addFormField(outerMiddle, "Max Checkout Length", maxCheckoutLengthField = new JTextField(), gbc, fieldHeight);
 
-        // Add fields for author details
-        addFormField(outerMiddle, "Author First Name", authorFirstNameField = new JTextField(), gbc, fieldHeight);
-        addFormField(outerMiddle, "Author Last Name", authorLastNameField = new JTextField(), gbc, fieldHeight);
-        addFormField(outerMiddle, "Street", authorStreetField = new JTextField(), gbc, fieldHeight);
-        addFormField(outerMiddle, "City", authorCityField = new JTextField(), gbc, fieldHeight);
-        addFormField(outerMiddle, "State", authorStateField = new JTextField(), gbc, fieldHeight);
-        addFormField(outerMiddle, "ZIP", authorZipField = new JTextField(), gbc, fieldHeight);
-        addFormField(outerMiddle, "Cell", authorCellField = new JTextField(), gbc, fieldHeight);
-
-        // Add authors list
-        JLabel authorsLabel = new JLabel("Authors:");
+        // Available authors list
+        JLabel availableAuthorsLabel = new JLabel("Available Authors:");
         gbc.gridx = 0;
         gbc.gridy++;
         gbc.weightx = 0.2;
-        outerMiddle.add(authorsLabel, gbc);
+        outerMiddle.add(availableAuthorsLabel, gbc);
 
-        authorListModel = new DefaultListModel<>();
-        JList<Author> authorList = new JList<>(authorListModel);
-        JScrollPane authorScrollPane = new JScrollPane(authorList);
-        authorScrollPane.setPreferredSize(new Dimension(200, 100));
+        availableAuthorsModel = new DefaultListModel<>();
+        JList<Author> availableAuthorsList = new JList<>(availableAuthorsModel);
+        availableAuthorsList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JScrollPane availableAuthorsScrollPane = new JScrollPane(availableAuthorsList);
+        availableAuthorsScrollPane.setPreferredSize(new Dimension(200, 100));
         gbc.gridx = 1;
         gbc.weightx = 0.8;
-        outerMiddle.add(authorScrollPane, gbc);
+        outerMiddle.add(availableAuthorsScrollPane, gbc);
 
-        // Add buttons to manage authors
-        JButton addAuthorButton = new JButton("Add Author");
-        JButton removeAuthorButton = new JButton("Remove Selected Author");
+        // Selected authors list
+        JLabel selectedAuthorsTitleLabel = new JLabel("Selected Authors:");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.weightx = 0.2;
+        outerMiddle.add(selectedAuthorsTitleLabel, gbc);
+
+        selectedAuthorsModel = new DefaultListModel<>();
+        JList<Author> selectedAuthorsList = new JList<>(selectedAuthorsModel);
+        JScrollPane selectedAuthorsScrollPane = new JScrollPane(selectedAuthorsList);
+        selectedAuthorsScrollPane.setPreferredSize(new Dimension(200, 100));
+        gbc.gridx = 1;
+        gbc.weightx = 0.8;
+        outerMiddle.add(selectedAuthorsScrollPane, gbc);
+
+        // Selected authors names display
+        selectedAuthorsLabel = new JLabel("Selected Authors' Names: ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        outerMiddle.add(selectedAuthorsLabel, gbc);
+
+        // Buttons to manage selected authors
+        JButton addSelectedAuthorsButton = new JButton("Add Selected Authors");
+        JButton removeSelectedAuthorsButton = new JButton("Remove Selected Author");
         gbc.gridx = 0;
         gbc.gridy++;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.NONE;
         JPanel authorButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        authorButtonPanel.add(addAuthorButton);
-        authorButtonPanel.add(removeAuthorButton);
+        authorButtonPanel.add(addSelectedAuthorsButton);
+        authorButtonPanel.add(removeSelectedAuthorsButton);
         outerMiddle.add(authorButtonPanel, gbc);
 
         // Add "Add Book" button
@@ -107,12 +118,14 @@ public class PanelAddBook {
         buttonPanel.add(addBookButton);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Add listeners
-        addAuthorButton.addActionListener(e -> addAuthor());
-        removeAuthorButton.addActionListener(e -> {
-            Author selectedAuthor = authorList.getSelectedValue();
+        // Load available authors and add listeners
+        loadAvailableAuthors();
+        addSelectedAuthorsButton.addActionListener(e -> addSelectedAuthors(availableAuthorsList));
+        removeSelectedAuthorsButton.addActionListener(e -> {
+            Author selectedAuthor = selectedAuthorsList.getSelectedValue();
             if (selectedAuthor != null) {
-                authorListModel.removeElement(selectedAuthor);
+                selectedAuthorsModel.removeElement(selectedAuthor);
+                updateSelectedAuthorsLabel();
             } else {
                 JOptionPane.showMessageDialog(null, "Please select an author to remove.");
             }
@@ -135,32 +148,33 @@ public class PanelAddBook {
         panel.add(field, gbc);
     }
 
-    private void addAuthor() {
-        String firstName = authorFirstNameField.getText();
-        String lastName = authorLastNameField.getText();
-        String street = authorStreetField.getText();
-        String city = authorCityField.getText();
-        String state = authorStateField.getText();
-        String zip = authorZipField.getText();
-        String cell = authorCellField.getText();
+    private void loadAvailableAuthors() {
+        DataAccess da = new DataAccessFacade();
+        HashMap<String, Author> authorsMap = da.readAuthors();
 
-        if (firstName.isEmpty() || lastName.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty() || zip.isEmpty() || cell.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill all author fields.");
-            return;
+        for (Author author : authorsMap.values()) {
+            availableAuthorsModel.addElement(author);
         }
+    }
 
-        Address address = new Address(street, city, state, zip);
-        Author author = new Author(firstName, lastName, cell, address, null);
-        authorListModel.addElement(author);
+    private void addSelectedAuthors(JList<Author> availableAuthorsList) {
+        List<Author> selectedAuthors = availableAuthorsList.getSelectedValuesList();
+        for (Author author : selectedAuthors) {
+            if (!selectedAuthorsModel.contains(author)) {
+                selectedAuthorsModel.addElement(author);
+            }
+        }
+        updateSelectedAuthorsLabel();
+    }
 
-        // Clear author fields
-        authorFirstNameField.setText("");
-        authorLastNameField.setText("");
-        authorStreetField.setText("");
-        authorCityField.setText("");
-        authorStateField.setText("");
-        authorZipField.setText("");
-        authorCellField.setText("");
+    private void updateSelectedAuthorsLabel() {
+        StringBuilder names = new StringBuilder();
+        for (int i = 0; i < selectedAuthorsModel.size(); i++) {
+            Author author = selectedAuthorsModel.get(i);
+            if (i > 0) names.append(", ");
+            names.append(author.getFirstName()).append(" ").append(author.getLastName());
+        }
+        selectedAuthorsLabel.setText("Selected Authors' Names: " + names);
     }
 
     private void addBook() {
@@ -176,16 +190,14 @@ public class PanelAddBook {
         try {
             int checkoutLength = Integer.parseInt(maxCheckoutLength);
             List<Author> authors = new ArrayList<>();
-            for (int i = 0; i < authorListModel.size(); i++) {
-                authors.add(authorListModel.get(i));
+            for (int i = 0; i < selectedAuthorsModel.size(); i++) {
+                authors.add(selectedAuthorsModel.get(i));
             }
 
             if (authors.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please add at least one author.");
                 return;
             }
-
-            DataAccess da = new DataAccessFacade();
             HashMap<String, Book> booksMap = da.readBooksMap();
             if (booksMap.containsKey(isbn)) {
                 JOptionPane.showMessageDialog(null, "Book with this ISBN already exists.");
@@ -200,7 +212,9 @@ public class PanelAddBook {
             ISBNField.setText("");
             titleField.setText("");
             maxCheckoutLengthField.setText("");
-            authorListModel.clear();
+            selectedAuthorsModel.clear();
+            updateSelectedAuthorsLabel();
+            this.panelAddBookCopy.refreshBookListPanel();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid number format for checkout length.");
         }
