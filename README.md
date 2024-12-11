@@ -8,6 +8,8 @@
 4. [Lab 4](./lab4) - Contents and details of Lab 4.
 5. [Lab 5](./lab5) - Contents and details of Lab 5.
 
+[SwingProject](./SwingProject)
+
 ---
 
 ## Group E
