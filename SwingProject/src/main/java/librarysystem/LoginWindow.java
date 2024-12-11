@@ -10,6 +10,7 @@ import dataaccess.User;
 
 public class LoginWindow extends JFrame implements LibWindow {
 	public static final LoginWindow INSTANCE = new LoginWindow();
+	public static JFrame manageFrame;
 
 	private boolean isInitialized = false;
 	private JTextField usernameField;
@@ -117,7 +118,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 				Auth auth = user.getAuthorization();
 
 				LibrarySystem.hideAllWindows();
-				JFrame manageFrame = new ManageWindow(auth);
+				manageFrame = new ManageWindow(auth);
 				manageFrame.setTitle("MIU Library Company");
 				manageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				Util.centerFrameOnDesktop(manageFrame);

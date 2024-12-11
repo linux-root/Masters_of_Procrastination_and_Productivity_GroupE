@@ -102,6 +102,7 @@ public class PanelCheckoutBook {
         splitPane.setResizeWeight(0.3);
 
         outerMiddle.add(splitPane, BorderLayout.CENTER);
+        refreshTableData();
     }
 
     private void defineFilterPanel() {
@@ -129,7 +130,9 @@ public class PanelCheckoutBook {
             return;
         }
 
-        DataAccess da = new DataAccessFacade();
+        DataAccessFacade da = new DataAccessFacade();
+        //da.emptyRecord();
+
         HashMap<String, LibraryMember> memberMap = da.readMemberMap();
         HashMap<String, Book> bookMap = da.readBooksMap();
 
@@ -167,12 +170,65 @@ public class PanelCheckoutBook {
     }
 
     private void filterByMemberID() {
-        // Filter logic
-        JOptionPane.showMessageDialog(null, "Filtering not yet implemented");
+        String filterMemberID = filterMemberIDField.getText().trim();
+        if (filterMemberID.isEmpty()) {
+            // No filter applied, show all data
+            refreshTableData(); // Refresh with no filter
+        } else {
+            System.out.println("Filtering by Member ID: " + filterMemberID);
+            DataAccess da = new DataAccessFacade();
+            HashMap<String, CheckoutRecord> checkoutRecords = da.readCheckoutRecordsMap();
+
+            List<String[]> filteredDataList = new ArrayList<>();
+
+            for (CheckoutRecord record : checkoutRecords.values()) {
+                LibraryMember member = record.getMember();
+                if (member.getMemberId().equals(filterMemberID)) {
+                    String memberName = member.getFirstName();
+                    for (CheckoutRecordEntry entry : record.getCheckoutRecordEntries()) {
+                        String[] row = {
+                                member.getMemberId() + " - " + memberName,
+                                entry.getBookCopy().getBook().getTitle(),
+                                entry.getBookCopy().getBook().getIsbn(),
+                                entry.getCheckoutDate().toString()
+                        };
+                        filteredDataList.add(row);
+                    }
+                }
+            }
+
+            String[][] filteredData = filteredDataList.toArray(new String[0][0]);
+
+            // Update the table with filtered data
+            checkoutTable.setModel(new javax.swing.table.DefaultTableModel(filteredData, new String[]{"Member", "Book Title", "ISBN", "Checkout Date"}));
+        }
     }
 
     private void refreshTableData() {
-        // Refresh table logic
+        DataAccess da = new DataAccessFacade();
+        HashMap<String, CheckoutRecord> checkoutRecords = da.readCheckoutRecordsMap();
+
+        String[] columns = {"Member", "Book Title", "ISBN", "Checkout Date"};
+        List<String[]> dataList = new ArrayList<>();
+
+        for (CheckoutRecord record : checkoutRecords.values()) {
+            LibraryMember member = record.getMember();
+            String memberName = member.getFirstName();
+            for (CheckoutRecordEntry entry : record.getCheckoutRecordEntries()) {
+                String[] row = {
+                        member.getMemberId() + " - " + memberName,
+                        entry.getBookCopy().getBook().getTitle(),
+                        entry.getBookCopy().getBook().getIsbn(),
+                        entry.getCheckoutDate().toString()
+                };
+                dataList.add(row);
+            }
+        }
+
+        String[][] data = dataList.toArray(new String[0][0]);
+
+        // Update the table model
+        checkoutTable.setModel(new javax.swing.table.DefaultTableModel(data, columns));
     }
 
     private void clearFields() {
