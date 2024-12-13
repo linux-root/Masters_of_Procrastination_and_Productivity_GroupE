@@ -1,0 +1,7 @@
+when you run the removeDuplicates method, the value of hashCode is modified, leading 
+to different hash code.
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, salary);
+	}

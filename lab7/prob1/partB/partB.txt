@@ -1,0 +1,23 @@
+The equals method in the Employee class doesn't override the equals method
+from the Object class correctly. When comparing the Employee objects in the list,
+the contains method relies on the equals method to determine if an object is in
+the list. So the result is false.
+
+to fix this, you should override the equals method from the Object class properly.
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, salary);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		return Objects.equals(name, other.name) && salary == other.salary;
+	}

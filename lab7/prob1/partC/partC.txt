@@ -1,0 +1,7 @@
+HashMap requires both equals and hashCode methods to be overridden in the Employee class.
+When you override the equals method, you also need to override the hashCode method.
+
+	@Override 
+	public int hashCode() { 
+		return Objects.hash(name, salary); 
+	}
