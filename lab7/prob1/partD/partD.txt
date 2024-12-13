@@ -1,7 +1,18 @@
-when you run the removeDuplicates method, the value of hashCode is modified, leading 
-to different hash code.
+when you run the removeDuplicates method, the value Employee.visited is modified, leading
+to different hash code, and different value of equals();
+
+Solution : change both equals() to and hashCode() to be independent from value of visited:
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, salary);
+	}
+
+
+	public boolean equals(Object ob) {
+		if(ob == null) return false;
+		if(!(ob instanceof Employee)) return false;
+		Employee emp = (Employee)ob;
+		//return emp.name.equals(name) && emp.salary == salary && emp.visited == visited;
+		return emp.name.equals(name) && emp.salary == salary ;
 	}
