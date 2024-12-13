@@ -1,0 +1,13 @@
+Java 8 supports multiple inheritance only through interfaces with default methods, not through classes. Let's evaluate the two scenarios:
+
+
+Scenario : Classes with Abstract Method
+
+Java does not support multiple inheritance for classes to avoid ambiguity (Diamond Problem). If D extends both B and C, Java will throw a compilation error, preventing the Diamond Problem.
+
+
+Scenario : Interface with Abstract Method
+
+Since Java supports multiple inheritance through interfaces, D must explicitly override method () to resolve the conflict. If D doesn't override method(), Java will throw a compilation error, forcing D to choose which implementation to use.
+
+
