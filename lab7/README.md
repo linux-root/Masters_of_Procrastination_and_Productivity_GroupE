@@ -45,13 +45,23 @@ When you override the equals method, you also need to override the hashCode meth
 [Source Code](https://github.com/linux-root/Masters_of_Procrastination_and_Productivity_GroupE/tree/main/lab7/prob1/partC)
 
 # 1 D
+when you run the removeDuplicates method, the value Employee.visited is modified, leading
+to different hash code, and different value of equals();
 
-when you run the removeDuplicates method, the value of hashCode is modified, leading 
-to different hash code.
+Solution : change both equals() to and hashCode() to be independent from value of visited:
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, salary);
+	}
+
+
+	public boolean equals(Object ob) {
+		if(ob == null) return false;
+		if(!(ob instanceof Employee)) return false;
+		Employee emp = (Employee)ob;
+		//return emp.name.equals(name) && emp.salary == salary && emp.visited == visited;
+		return emp.name.equals(name) && emp.salary == salary ;
 	}
 [Source Code](https://github.com/linux-root/Masters_of_Procrastination_and_Productivity_GroupE/tree/main/lab7/prob1/partD)
 
