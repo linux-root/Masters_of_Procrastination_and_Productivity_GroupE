@@ -39,3 +39,14 @@ public static List<String> allHavingMultipleAuthors() {
 
 }
 ```
+----
+## 2. Uses flatMap to write to console a list of all order items
+[source code](./prob2/Main.java)
+```java
+//Uses flatMap to write to console a list of all order items
+private void showAllOrderItems() {
+    System.out.println("\n==============\nAll order items:");
+    List<OrderItem> orderItems = this.orders.stream().flatMap(order -> order.getOrderItems().stream()).toList();
+    System.out.println(orderItems);
+}
+```
