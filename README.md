@@ -8,7 +8,8 @@
 4. [Lab 4](./lab4) - Contents and details of Lab 4.
 5. [Lab 5](./lab5) - Contents and details of Lab 5.
 6. [Lab 7](./lab7) - Contents and details of Lab 7.
-7. [Lab 8](./lab8) - Contents and details of Lab 7.
+7. [Lab 8](./lab8) - Contents and details of Lab 8.
+8. [Lab 9](./lab9) - Contents and details of Lab 9.
 
 [SwingProject](./SwingProject)
 
