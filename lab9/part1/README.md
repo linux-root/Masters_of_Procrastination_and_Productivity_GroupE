@@ -57,3 +57,46 @@ private void showAllOrderItems() {
 		//[[Jim, 100000], [Jim, 75000], [Jim, 70000], [Joe, 59000], [Joe, 50000], [Rich, 88000], [Steve, 55000], [Tom, 80000]]
 		System.out.println(list.stream().sorted(Comparator.comparing(Employee::getName).thenComparing(Comparator.comparing(Employee::getSalary).reversed())).toList());
 ```
+---
+## 4. Prime stream
+[source code](./prob4/PrimeStream.java)
+
+```java
+package lesson9.labs.prob4;
+
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+public class PrimeStream {
+    private static Integer nextPrime(Integer currentPrime){
+        return nextPrime(currentPrime, currentPrime + 1);
+    }
+
+    private static Integer nextPrime(Integer currentPrime, Integer candidate){
+        for (int i = 2; i <= currentPrime; i++) {
+            if (candidate % i == 0) {
+                return nextPrime(currentPrime, candidate + 1);
+            }
+        }
+        return candidate;
+    }
+
+    // 4A
+    private static final Stream<Integer> primes = Stream.iterate(2, PrimeStream::nextPrime);
+
+    // 4B Solution: always create new Stream because the Stream is stateful and cannot be used after being closed
+    private static final Supplier<Stream<Integer>> primesSupplier = () -> Stream.iterate(2, PrimeStream::nextPrime);
+
+    // 4B
+    static void printFirstNPrimes(long n) {
+        //primes.limit(n).forEach(System.out::println); // <---- Have issue : stream has already been operated upon or closed
+        primesSupplier.get().limit(n).forEach(System.out::println);
+    }
+
+    public static void main(String[] args) {
+        printFirstNPrimes(10);
+        System.out.println("====");
+        printFirstNPrimes(5);
+    }
+}
+```
