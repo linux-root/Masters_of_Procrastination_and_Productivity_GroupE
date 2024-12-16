@@ -100,7 +100,40 @@ public class PrimeStream {
     }
 }
 ```
+---
+## 5. Remove branching logic
 
+[EmployeeInfoBetter.java](./prob5/EmployeeInfoBetter.java)
+```java
+static enum SortMethod {BYNAME, BYSALARY};
+Function<Employee, String> byName = e -> e.getName();
+Function<Employee, Integer> bySalary = e -> -e.getSalary();
+
+private final Map<SortMethod, Comparator<Employee>> comparatorMap = Map.of(
+        SortMethod.BYNAME, Comparator.comparing(byName).thenComparing(bySalary),
+        SortMethod.BYSALARY, Comparator.comparing(bySalary).thenComparing(byName)
+);
+
+public void sort(List<Employee> emps, final SortMethod method) {
+    Collections.sort(emps, comparatorMap.get(method));
+
+```
+
+[EmployeeInfo.java](./prob5/EmployeeInfo.java)
+
+```java
+private final Map<SortMethod, Comparator<Employee>> comparatorMap = Map.of(
+        SortMethod.BYNAME, Comparator.comparing(Employee::getName),
+        SortMethod.BYSALARY, Comparator.comparing(Employee::getSalary)
+);
+
+public void sort(List<Employee> emps, final SortMethod method) {
+    Collections.sort(emps, comparatorMap.get(method));
+}
+```
+
+
+---
 ## 6. Section
 ```java
 public class Section {
