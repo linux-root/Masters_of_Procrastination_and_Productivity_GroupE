@@ -1,6 +1,3 @@
-## 14. Lazy singleton
-[source code](./prob14/MySingletonLazy.java)
-```java
 import java.util.Optional;
 
 public class MySingletonLazy {
@@ -22,5 +19,3 @@ public class MySingletonLazy {
     }
 
 }
-```
----
