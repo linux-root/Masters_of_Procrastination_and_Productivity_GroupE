@@ -59,3 +59,18 @@ public class BugReportGenerator {
 }
 ```
 ---
+
+## 2. FixThis
+[source code](./prob2)
+```java
+List<String> processList(List<String> list) {
+    return list.stream().map(x -> {
+        try {
+            return doNothingIfShort(x);
+        } catch (InputTooLongException e) {
+            throw new RuntimeException(e);
+        }
+    }).collect(Collectors.toList());
+
+}
+```
