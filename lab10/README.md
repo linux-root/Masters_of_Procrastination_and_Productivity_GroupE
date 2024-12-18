@@ -74,3 +74,20 @@ List<String> processList(List<String> list) {
 
 }
 ```
+---
+
+## 3. printListOfExpectedFemaleGuests
+
+[source code](./prob3)
+```java
+public void printListOfExpectedFemaleGuests(List<Guest> invited) {
+    //implement
+    invited.stream()
+            .filter(PredicateWithException.unchecked((Guest guest) -> guest.isPlanningToCome() && guest.getGender() == Gender.F && checkLegal(guest)))
+            .map(Guest::getName)
+            .sorted()
+            .forEach(System.out::println);
+
+
+}
+```
